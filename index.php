@@ -34,6 +34,12 @@ switch ($route) {
     case '/products':
     case '/products.php':
     case '/san-pham':
+        if (isset($_GET['search']) || isset($_GET['category']) || 
+            isset($_GET['min_price']) || isset($_GET['max_price']) || 
+            isset($_GET['brand'])) {
+            require __DIR__ . '/app/views/products.php';
+            break;
+        }
         require __DIR__ . '/app/views/products.php';
         break;
 
@@ -129,6 +135,21 @@ switch ($route) {
         }
         break;
 
+    case '/api/reviews/add':
+        header('Content-Type: application/json; charset=utf-8');
+        require_once __DIR__ . '/app/controllers/ReviewController.php';
+        
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                $reviewController = new ReviewController();
+                echo $reviewController->addReview();
+            } catch (Exception $e) {
+                echo json_encode(['success' => false, 'message' => 'Lỗi hệ thống']);
+            }
+            exit;
+        }
+        break;
+
     // User routes
     case '/user/login':
         $userController = new UserController();
@@ -198,6 +219,14 @@ switch ($route) {
             exit;
         }
         require __DIR__ . '/app/views/admin/products/edit.php';
+        break;
+
+    case (preg_match('/^\/san-pham/', $route) ? true : false):
+        require __DIR__ . '/app/views/products.php';
+        break;
+
+    case '/san-pham':
+        require __DIR__ . '/app/views/products.php';
         break;
 
     default:

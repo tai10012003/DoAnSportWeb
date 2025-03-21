@@ -21,19 +21,19 @@ class UserController {
             $user = $stmt->fetch();
 
             if (!$user) {
-                $_SESSION['login_error'] = 'Email hoặc tên đăng nhập không tồn tại';
+                $_SESSION['login_error'] = 'Email không đúng hoặc không tồn tại !';
                 header("Location: /WebbandoTT/dang-nhap");
                 exit();
             }
 
             if (!password_verify($password, $user['password'])) {
-                $_SESSION['login_error'] = 'Mật khẩu không chính xác';
+                $_SESSION['login_error'] = 'Mật khẩu không chính xác !';
                 header("Location: /WebbandoTT/dang-nhap");
                 exit();
             }
 
             if ($user['trang_thai'] != 1) {
-                $_SESSION['login_error'] = 'Tài khoản đã bị khóa';
+                $_SESSION['login_error'] = 'Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên để biết thông tin !';
                 header("Location: /WebbandoTT/dang-nhap");
                 exit();
             }
@@ -69,7 +69,7 @@ class UserController {
             $stmt = $this->conn->prepare("SELECT COUNT(*) FROM users WHERE username = ? OR email = ?");
             $stmt->execute([$username, $email]);
             if ($stmt->fetchColumn() > 0) {
-                $_SESSION['register_error'] = 'Username hoặc email đã tồn tại';
+                $_SESSION['register_error'] = 'Username hoặc email đã tồn tại !';
                 header("Location: /WebbandoTT/dang-ky");
                 exit();
             }

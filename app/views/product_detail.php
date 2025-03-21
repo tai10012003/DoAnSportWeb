@@ -1,11 +1,9 @@
 <?php
 include 'includes/header.php';
 require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../controllers/ReviewController.php';
 
-// Lấy mã sản phẩm từ URL
 $ma_sp = basename($_SERVER['REQUEST_URI']);
-
-// Kết nối database và lấy thông tin sản phẩm
 $db = new Database();
 $conn = $db->getConnection();
 
@@ -22,8 +20,10 @@ $product = $stmt->fetch(PDO::FETCH_ASSOC);
 $update_sql = "UPDATE san_pham SET luot_xem = luot_xem + 1 WHERE ma_sp = ?";
 $stmt = $conn->prepare($update_sql);
 $stmt->execute([$ma_sp]);
-?>
 
+$reviewController = new ReviewController();
+$reviews = $reviewController->getProductReviews($product['id']);
+?>
 <div class="product-detail">
     <div class="container">
         <nav aria-label="breadcrumb">
@@ -168,48 +168,60 @@ $stmt->execute([$ma_sp]);
                     <div id="reviews" class="tab-pane fade">
                         <div class="review-form mb-4">
                             <?php if (isset($_SESSION['user_id'])): ?>
-                            <form>
-                                <div class="mb-3">
-                                    <label class="form-label">Đánh giá của bạn</label>
-                                    <div class="rating-input">
-                                        <?php for($i = 5; $i >= 1; $i--): ?>
-                                            <input type="radio" name="rating" value="<?= $i ?>" id="star<?= $i ?>">
-                                            <label for="star<?= $i ?>"><i class="bi bi-star-fill"></i></label>
-                                        <?php endfor; ?>
+                                <form id="reviewForm">
+                                    <input type="hidden" name="san_pham_id" value="<?= $product['id'] ?>">
+                                    <div class="mb-3">
+                                        <label class="form-label">Đánh giá của bạn</label>
+                                        <div class="rating-input">
+                                            <?php for($i = 5; $i >= 1; $i--): ?>
+                                                <input type="radio" name="diem_danh_gia" value="<?= $i ?>" id="star<?= $i ?>" required>
+                                                <label for="star<?= $i ?>"><i class="bi bi-star-fill"></i></label>
+                                            <?php endfor; ?>
+                                        </div>
                                     </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Nhận xét của bạn</label>
+                                        <textarea class="form-control" name="noi_dung" rows="3" required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
+                                </form>
+                            <?php else: ?>
+                                <div class="alert alert-info">
+                                    Vui lòng <a href="/WebbandoTT/dang-nhap">đăng nhập</a> để viết đánh giá
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Nhận xét của bạn</label>
-                                    <textarea class="form-control" rows="3" required></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
-                            </form>
+                            <?php endif; ?>
                         </div>
-                            <!-- Reviews List -->
-                            <div class="reviews-list">
-                                <!-- Sample Review -->
-                                <div class="review-item">
-                                    <div class="review-header">
-                                        <span class="reviewer-name">Nguyễn Văn A</span>
-                                        <span class="review-date">20/11/2023</span>
+
+                        <div class="reviews-list mt-4">
+                            <?php if (!empty($reviews)): ?>
+                                <?php foreach ($reviews as $review): ?>
+                                    <div class="review-item mb-4 p-3 border rounded bg-light">
+                                        <div class="review-header d-flex justify-content-between align-items-center mb-2">
+                                            <div class="reviewer-info">
+                                                <span class="reviewer-name fw-bold"><?= htmlspecialchars($review['ten_nguoi_dung']) ?></span>
+                                                <small class="text-muted ms-2"><?= date('d/m/Y H:i', strtotime($review['created_at'])) ?></small>
+                                            </div>
+                                            <div class="star-rating">
+                                                <?php for($i = 1; $i <= 5; $i++): ?>
+                                                    <i class="bi bi-star<?= $i <= $review['diem_danh_gia'] ? '-fill text-warning' : '' ?>"></i>
+                                                <?php endfor; ?>
+                                            </div>
+                                        </div>
+                                        <div class="review-content">
+                                            <?= nl2br(htmlspecialchars($review['noi_dung'])) ?>
+                                        </div>
                                     </div>
-                                    <div class="star-rating">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-half"></i>
-                                    </div>
-                                    <p class="review-content">
-                                        Sản phẩm rất tốt, chất lượng cao, đóng gói cẩn thận...
-                                    </p>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <div class="text-center p-4">
+                                    <div class="mb-3"><i class="bi bi-chat-square-text" style="font-size: 2rem;"></i></div>
+                                    <p class="text-muted">Chưa có đánh giá nào cho sản phẩm này</p>
+                                    <?php if (isset($_SESSION['user_id'])): ?>
+                                        <p>Hãy là người đầu tiên đánh giá sản phẩm!</p>
+                                    <?php endif; ?>
                                 </div>
-                            </div>
-                        <?php else: ?></div>
-                            <div class="alert alert-info">
-                                Vui lòng <a href="/WebbandoTT/dang-nhap">đăng nhập</a> để viết đánh giá
-                            </div>
-                        <?php endif; ?>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -303,32 +315,73 @@ $stmt->execute([$ma_sp]);
     </div>
 </div>
 
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/WebbandoTT/app/public/js/main.js"></script>
 <script>
-function changeMainImage(src) {
-    document.getElementById('main-product-image').src = src;
-    document.querySelectorAll('.detail-thumbnail').forEach(thumb => {
-        thumb.classList.remove('active');
-        if (thumb.src === src) thumb.classList.add('active');
-    });
-}
-
-function updateQuantity(action) {
-    const input = document.getElementById('quantity');
-    const currentValue = parseInt(input.value);
-    const max = parseInt(input.max);
-    
-    if (action === 'increase' && currentValue < max) {
-        input.value = currentValue + 1;
-    } else if (action === 'decrease' && currentValue > 1) {
-        input.value = currentValue - 1;
+    function changeMainImage(src) {
+        document.getElementById('main-product-image').src = src;
+        document.querySelectorAll('.detail-thumbnail').forEach(thumb => {
+            thumb.classList.remove('active');
+            if (thumb.src === src) thumb.classList.add('active');
+        });
     }
-}
 
-document.querySelector('.detail-add-cart-form')?.addEventListener('submit', function(e) {
-    e.preventDefault();
-});
+    function updateQuantity(action) {
+        const input = document.getElementById('quantity');
+        const currentValue = parseInt(input.value);
+        const max = parseInt(input.max);
+        
+        if (action === 'increase' && currentValue < max) {
+            input.value = currentValue + 1;
+        } else if (action === 'decrease' && currentValue > 1) {
+            input.value = currentValue - 1;
+        }
+    }
+
+    document.querySelector('.detail-add-cart-form')?.addEventListener('submit', function(e) {
+        e.preventDefault();
+    });
+
+    document.getElementById('reviewForm')?.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const submitBtn = this.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        
+        const formData = new FormData(this);
+
+        fetch('/WebbandoTT/api/reviews/add', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Thành công',
+                    text: data.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    window.location.reload();
+                });
+            } else {
+                throw new Error(data.message || 'Có lỗi xảy ra khi gửi đánh giá');
+            }
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi',
+                text: error.message || 'Không thể gửi đánh giá'
+            });
+        })
+        .finally(() => {
+            submitBtn.disabled = false;
+        });
+    });
 </script>
 
 <?php include 'includes/footer.php'; ?>

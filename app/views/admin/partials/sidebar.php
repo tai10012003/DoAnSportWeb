@@ -77,13 +77,11 @@
 <script>
 function handleAdminLogout() {
     if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
-        // Xóa session
         fetch('/WebbandoTT/dang-xuat', {
             method: 'POST',
             credentials: 'include'
         })
         .then(() => {
-            // Chuyển hướng về trang đăng nhập
             window.location.href = '/WebbandoTT/dang-nhap';
         })
         .catch(error => {

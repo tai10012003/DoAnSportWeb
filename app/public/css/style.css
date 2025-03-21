@@ -4137,6 +4137,40 @@
     margin: 0;
 }
 
+.reviews-list {
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.reviews-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.reviews-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.reviews-list::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.reviews-list::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.reviews-list {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+}
+
+.review-item {
+    margin-right: 5px;
+    break-inside: avoid;
+}
+
 /* Related Products Section */
 .related-products {
     margin-top: 2rem;
@@ -4311,6 +4345,8 @@
 .detail-add-to-wishlist i {
     font-size: 1.2rem;
 }
+
+
 
 /* Responsive adjustments */
 @media (max-width: 576px) {

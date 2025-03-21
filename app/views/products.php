@@ -8,18 +8,28 @@ if (!isset($_SESSION['cart'])) {
 require_once __DIR__ . '/../controllers/ProductController.php';
 
 $productController = new ProductController();
-$data = $productController->getAllProducts();
+$data = $productController->filterAndGetProducts();
 $products = $data['products'];
+$categories = $data['categories'];
+$brands = $data['brands'];
+$totalProducts = $data['totalProducts'];
+$currentPage = $data['currentPage'];
+$totalPages = $data['totalPages'];
+$filters = $data['filters'];
 ?>
 
 <div class="hero-mini">
     <div class="container">
         <h1 class="display-6 text-center mb-4">SẢN PHẨM THỂ THAO</h1>
         <div class="search-box mb-5">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm...">
-                <button class="btn btn-primary"><i class="bi bi-search"></i></button>
-            </div>
+            <form action="/WebbandoTT/san-pham" method="GET" id="filterForm">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="search" 
+                           placeholder="Tìm kiếm sản phẩm..." 
+                           value="<?php echo htmlspecialchars($filters['search'] ?? ''); ?>">
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -29,34 +39,77 @@ $products = $data['products'];
         <!-- Sidebar lọc sản phẩm -->
         <div class="col-lg-3">
             <div class="filter-sidebar">
+                <!-- Danh mục -->
                 <div class="filter-box mb-4">
-                    <h5 class="filter-title">Danh Mục</h5>
-                    <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action">Tất cả</a>
-                        <a href="#" class="list-group-item list-group-item-action">Dụng cụ tập luyện</a>
-                        <a href="#" class="list-group-item list-group-item-action">Thiết bị thể thao</a>
-                        <a href="#" class="list-group-item list-group-item-action">Phụ kiện</a>
+                    <h5 class="filter-title border-bottom pb-2 mb-3">Danh Mục</h5>
+                    <div class="list-group list-group-flush">
+                        <a href="/WebbandoTT/san-pham" 
+                           class="list-group-item list-group-item-action d-flex justify-content-between align-items-center <?php echo !($filters['category'] ?? '') ? 'active fw-bold' : ''; ?>">
+                            <span>Tất cả</span>
+                            <span class="badge bg-primary rounded-pill">
+                                <?php echo $totalProducts; ?>
+                            </span>
+                        </a>
+                        <?php foreach ($categories as $category): ?>
+                            <a href="/WebbandoTT/san-pham?category=<?php echo $category['id']; ?>" 
+                               class="list-group-item list-group-item-action d-flex justify-content-between align-items-center <?php echo ($filters['category'] ?? '') == $category['id'] ? 'active fw-bold' : ''; ?>">
+                                <span><?php echo htmlspecialchars($category['ten_danh_muc']); ?></span>
+                                <i class="bi bi-chevron-right"></i>
+                            </a>
+                        <?php endforeach; ?>
                     </div>
                 </div>
 
+                <!-- Thương hiệu -->
                 <div class="filter-box mb-4">
-                    <h5 class="filter-title">Giá</h5>
-                    <div class="price-range">
-                        <input type="range" class="form-range" min="0" max="10000000" step="100000">
-                        <div class="d-flex justify-content-between">
-                            <span>0đ</span>
-                            <span>10.000.000đ</span>
-                        </div>
+                    <h5 class="filter-title border-bottom pb-2 mb-3 mt-4">Thương Hiệu</h5>
+                    <div class="list-group list-group-flush">
+                        <a href="/WebbandoTT/san-pham" 
+                           class="list-group-item list-group-item-action d-flex justify-content-between align-items-center <?php echo !($filters['brand'] ?? '') ? 'active fw-bold' : ''; ?>">
+                            <span>Tất cả</span>
+                            <span class="badge bg-primary rounded-pill">
+                                <?php echo $totalProducts; ?>
+                            </span>
+                        </a>
+                        <?php foreach ($brands as $brand): ?>
+                            <a href="/WebbandoTT/san-pham?brand=<?php echo $brand['id']; ?>" 
+                               class="list-group-item list-group-item-action d-flex justify-content-between align-items-center <?php echo ($filters['brand'] ?? '') == $brand['id'] ? 'active fw-bold' : ''; ?>">
+                                <span><?php echo htmlspecialchars($brand['ten_thuong_hieu']); ?></span>
+                                <i class="bi bi-chevron-right"></i>
+                            </a>
+                        <?php endforeach; ?>
                     </div>
                 </div>
 
+                <!-- Khoảng giá -->
                 <div class="filter-box mb-4">
-                    <h5 class="filter-title">Thương Hiệu</h5>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="brand1">
-                        <label class="form-check-label" for="brand1">Nike</label>
+                    <h5 class="filter-title border-bottom pb-2 mb-3 mt-4">Khoảng Giá</h5>
+                    <div class="d-grid gap-2">
+                        <a href="/WebbandoTT/san-pham" 
+                           class="btn <?php echo empty($filters['price']) ? 'btn-success' : 'btn-outline-success'; ?> btn-sm">
+                            Tất cả
+                        </a>
+                        <a href="/WebbandoTT/san-pham?price=0-500000" 
+                           class="btn <?php echo ($filters['price'] ?? '') === '0-500000' ? 'btn-success' : 'btn-outline-success'; ?> btn-sm">
+                            Dưới 500.000₫
+                        </a>
+                        <a href="/WebbandoTT/san-pham?price=500000-1000000" 
+                           class="btn <?php echo ($filters['price'] ?? '') === '500000-1000000' ? 'btn-success' : 'btn-outline-success'; ?> btn-sm">
+                            500.000₫ - 1.000.000₫
+                        </a>
+                        <a href="/WebbandoTT/san-pham?price=1000000-2000000" 
+                           class="btn <?php echo ($filters['price'] ?? '') === '1000000-2000000' ? 'btn-success' : 'btn-outline-success'; ?> btn-sm">
+                            1.000.000₫ - 2.000.000₫
+                        </a>
+                        <a href="/WebbandoTT/san-pham?price=2000000-5000000" 
+                           class="btn <?php echo ($filters['price'] ?? '') === '2000000-5000000' ? 'btn-success' : 'btn-outline-success'; ?> btn-sm">
+                            2.000.000₫ - 5.000.000₫
+                        </a>
+                        <a href="/WebbandoTT/san-pham?price=5000000-up" 
+                           class="btn <?php echo ($filters['price'] ?? '') === '5000000-up' ? 'btn-success' : 'btn-outline-success'; ?> btn-sm">
+                            Trên 5.000.000₫
+                        </a>
                     </div>
-                    <!-- Thêm các thương hiệu khác -->
                 </div>
             </div>
         </div>
@@ -66,13 +119,20 @@ $products = $data['products'];
             <div class="product-controls mb-4">
                 <div class="row align-items-center">
                     <div class="col">
-                        <span>Hiển thị 1-12 trong 36 sản phẩm</span>
+                        <span>Hiển thị <?php echo count($products); ?> trong <?php echo $totalProducts; ?> sản phẩm</span>
                     </div>
                     <div class="col-auto">
-                        <select class="form-select">
-                            <option>Mới nhất</option>
-                            <option>Giá tăng dần</option>
-                            <option>Giá giảm dần</option>
+                        <a href="/WebbandoTT/san-pham" 
+                            class="btn btn-outline-dark btn-sm" style="font-size: 16px;">
+                            Tất cả sản phẩm
+                        </a>
+                    </div>
+                    <div class="col-auto">
+                        <select class="form-select" id="sortSelect">
+                            <option value="">Tất cả</option>
+                            <option value="promotion" <?php echo ($filters['sort'] ?? '') === 'promotion' ? 'selected' : ''; ?>>Khuyến mãi</option>
+                            <option value="price_asc" <?php echo ($filters['sort'] ?? '') === 'price_asc' ? 'selected' : ''; ?>>Giá tăng dần</option>
+                            <option value="price_desc" <?php echo ($filters['sort'] ?? '') === 'price_desc' ? 'selected' : ''; ?>>Giá giảm dần</option>
                         </select>
                     </div>
                 </div>
@@ -137,20 +197,55 @@ $products = $data['products'];
                 }
                 ?>
             </div>
-            <!-- Phân trang -->
-            <nav class="mt-5">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                </ul>
-            </nav>
+
+            <?php if ($totalPages > 1): ?>
+                <nav class="mt-5">
+                    <ul class="pagination justify-content-center">
+                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                            <li class="page-item <?php echo $currentPage == $i ? 'active' : ''; ?>">
+                                <a class="page-link" href="/WebbandoTT/san-pham?page=<?php echo $i; ?><?php 
+                                    echo !empty($filters['search']) ? '&search=' . urlencode($filters['search']) : ''; 
+                                    echo !empty($filters['category']) ? '&category=' . $filters['category'] : '';
+                                    echo !empty($filters['brand']) ? '&brand=' . $filters['brand'] : '';
+                                    echo isset($filters['maxPrice']) ? '&max_price=' . $filters['maxPrice'] : '';
+                                ?>"><?php echo $i; ?></a>
+                            </li>
+                        <?php endfor; ?>
+                    </ul>
+                </nav>
+            <?php endif; ?>
         </div>
     </div>
 </div>
 
 <?php include 'includes/footer.php'; ?>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/WebbandoTT/app/public/js/main.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Xử lý form tìm kiếm
+        const filterForm = document.getElementById('filterForm');
+        filterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const searchValue = this.querySelector('input[name="search"]').value.trim();
+            if (searchValue) {
+                window.location.href = '/WebbandoTT/san-pham?search=' + encodeURIComponent(searchValue);
+            }
+        });
+
+        // Xử lý sắp xếp
+        const sortSelect = document.getElementById('sortSelect');
+        sortSelect.addEventListener('change', function() {
+            const currentUrl = new URL(window.location.href);
+            if (this.value) {
+                currentUrl.searchParams.set('sort', this.value);
+            } else {
+                currentUrl.searchParams.delete('sort');
+            }
+            window.location.href = currentUrl.toString();
+        });
+    });
+</script>
 </body>
 </html>

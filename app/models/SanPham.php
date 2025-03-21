@@ -345,5 +345,122 @@ class SanPham {
             return [];
         }
     }
+
+    public function filterProducts($search = '', $categoryId = null, $priceRange = null, $brandId = null, $page = 1, $perPage = 12, $sort = '') {
+        try {
+            $offset = ($page - 1) * $perPage;
+            $params = [];
+            
+            $sql = "SELECT sp.*, dm.ten_danh_muc, th.ten_thuong_hieu 
+                   FROM " . $this->table_name . " sp
+                   LEFT JOIN danh_muc dm ON sp.danh_muc_id = dm.id
+                   LEFT JOIN thuong_hieu th ON sp.thuong_hieu_id = th.id
+                   WHERE 1=1";
+
+            if (!empty($search)) {
+                $sql .= " AND (sp.ten_sp LIKE :search OR sp.ma_sp LIKE :search)";
+                $params[':search'] = "%$search%";
+            }
+
+            if (!empty($categoryId)) {
+                $sql .= " AND sp.danh_muc_id = :category_id";
+                $params[':category_id'] = $categoryId;
+            }
+
+            if (!empty($priceRange)) {
+                list($min, $max) = explode('-', $priceRange);
+                if ($max === 'up') {
+                    $sql .= " AND sp.gia >= :min_price";
+                    $params[':min_price'] = $min;
+                } else {
+                    $sql .= " AND sp.gia BETWEEN :min_price AND :max_price";
+                    $params[':min_price'] = $min;
+                    $params[':max_price'] = $max;
+                }
+            }
+
+            if (!empty($brandId)) {
+                $sql .= " AND sp.thuong_hieu_id = :brand_id";
+                $params[':brand_id'] = $brandId;
+            }
+
+            // Add sorting
+            switch ($sort) {
+                case 'promotion':
+                    $sql .= " AND sp.gia_khuyen_mai < sp.gia ORDER BY (sp.gia - sp.gia_khuyen_mai) DESC";
+                    break;
+                case 'price_asc':
+                    $sql .= " ORDER BY sp.gia ASC";
+                    break;
+                case 'price_desc':
+                    $sql .= " ORDER BY sp.gia DESC";
+                    break;
+                default:
+                    $sql .= " ORDER BY sp.id DESC";
+            }
+
+            $sql .= " LIMIT :offset, :per_page";
+
+            $stmt = $this->conn->prepare($sql);
+            
+            // Bind tham số cho LIMIT và OFFSET
+            $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+            $stmt->bindValue(':per_page', (int)$perPage, PDO::PARAM_INT);
+
+            // Bind các tham số khác
+            foreach ($params as $key => $value) {
+                $stmt->bindValue($key, $value);
+            }
+
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch(PDOException $e) {
+            error_log("Error in filterProducts: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    public function getTotalFilteredProducts($search = '', $categoryId = null, $minPrice = null, $maxPrice = null, $brandId = null) {
+        try {
+            $params = [];
+            $sql = "SELECT COUNT(*) FROM " . $this->table_name . " sp WHERE 1=1";
+
+            if (!empty($search)) {
+                $sql .= " AND sp.ten_sp LIKE :search";
+                $params[':search'] = "%$search%";
+            }
+
+            if ($categoryId) {
+                $sql .= " AND sp.danh_muc_id = :category_id";
+                $params[':category_id'] = $categoryId;
+            }
+
+            if ($minPrice !== null) {
+                $sql .= " AND sp.gia >= :min_price";
+                $params[':min_price'] = $minPrice;
+            }
+
+            if ($maxPrice !== null) {
+                $sql .= " AND sp.gia <= :max_price";
+                $params[':max_price'] = $maxPrice;
+            }
+
+            if ($brandId) {
+                $sql .= " AND sp.thuong_hieu_id = :brand_id";
+                $params[':brand_id'] = $brandId;
+            }
+
+            $stmt = $this->conn->prepare($sql);
+            foreach ($params as $key => &$value) {
+                $stmt->bindParam($key, $value);
+            }
+            
+            $stmt->execute();
+            return $stmt->fetchColumn();
+        } catch(PDOException $e) {
+            error_log("Error in getTotalFilteredProducts: " . $e->getMessage());
+            return 0;
+        }
+    }
 }
 ?>

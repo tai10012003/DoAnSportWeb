@@ -40,7 +40,7 @@
                         <label for="username">Tên đăng nhập</label>
                         <div class="input-group">
                             <i class="bi bi-person"></i>
-                            <input type="text" id="username" name="username" placeholder="Nhập tên đăng nhập" required>
+                            <input type="text" id="username" name="username" placeholder="Nhập tên đăng nhập" maxlength="12" required>
                         </div>
                     </div>
 

@@ -2,39 +2,47 @@
 session_start();
 header('Content-Type: application/json');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'], $_POST['quantity'])) {
-    $product_id = $_POST['product_id'];
-    $quantity = (int) $_POST['quantity'];
+try {
+    $data = json_decode(file_get_contents('php://input'), true);
+    
+    if (!isset($data['product_id']) || !isset($data['quantity'])) {
+        throw new Exception('Missing required parameters');
+    }
 
-    if ($quantity <= 0) {
-        unset($_SESSION['cart'][$product_id]); // Xóa sản phẩm nếu số lượng <= 0
-    } else {
+    $product_id = $data['product_id'];
+    $quantity = intval($data['quantity']);
+
+    if ($quantity < 1 || $quantity > 10) {
+        throw new Exception('Invalid quantity');
+    }
+
+    if (isset($_SESSION['cart'][$product_id])) {
         $_SESSION['cart'][$product_id]['quantity'] = $quantity;
+        
+        // Tính toán lại tổng tiền
+        $itemTotal = $_SESSION['cart'][$product_id]['price'] * $quantity;
+        $subtotal = 0;
+        $cartCount = 0;
+        foreach ($_SESSION['cart'] as $item) {
+            $subtotal += $item['price'] * $item['quantity'];
+            $cartCount += $item['quantity'];
+        }
+        $shipping = $subtotal >= 500000 ? 0 : 30000;
+        $total = $subtotal + $shipping;
+
+        echo json_encode([
+            'success' => true,
+            'itemTotal' => number_format($itemTotal) . '₫',
+            'subtotal' => number_format($subtotal) . '₫',
+            'total' => number_format($total) . '₫',
+            'cartCount' => $cartCount
+        ]);
+    } else {
+        throw new Exception('Product not found in cart');
     }
-
-    // Tính lại tổng tiền giỏ hàng
-    $cart_count = 0;
-    $subtotal = 0;
-
-    foreach ($_SESSION['cart'] as $item) {
-        $cart_count += $item['quantity'];
-        $subtotal += $item['price'] * $item['quantity'];
-    }
-
-    // Phí vận chuyển (Miễn phí nếu >= 500,000₫)
-    $shipping = $subtotal >= 500000 ? 0 : ($subtotal > 0 ? 30000 : 0);
-    $total = $subtotal + $shipping;
-
+} catch (Exception $e) {
     echo json_encode([
-        'success' => true,
-        'cart_count' => $cart_count,
-        'cart_total' => $subtotal,
-        'shipping' => $shipping,
-        'total' => $total,
-        'item_total' => $subtotal, // Tổng tiền từng sản phẩm
+        'success' => false,
+        'message' => $e->getMessage()
     ]);
-    exit;
 }
-
-echo json_encode(['success' => false, 'message' => 'Có lỗi xảy ra']);
-exit;

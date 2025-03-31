@@ -31,7 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['cart'][$product_id] = [
                 'id' => $product['id'],
                 'name' => $product['ten_sp'],
-                'image' => $product['hinh_anh'],
+                'so_luong' => $product['so_luong'],
+                'image' => $product['hinh_anh'], // Using 'image' consistently
                 'price' => $product['gia_khuyen_mai'] > 0 ? $product['gia_khuyen_mai'] : $product['gia'],
                 'quantity' => $quantity
             ];

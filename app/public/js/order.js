@@ -5,22 +5,25 @@ document.addEventListener("DOMContentLoaded", function () {
         const receiverName = document.getElementById("receiver_name").value;
         const receiverPhone = document.getElementById("receiver_phone").value;
         const BaseAddress = document.getElementById("receiver_address").value;
-        const thanhPho = document.getElementById("city_select").value; // Lấy mã thành phố
-        const cityText =
-          document.getElementById("city_select").options[
+        const thanhPho = document.getElementById("city_select").value;
+        const cityText = document.getElementById("city_select").options[
             document.getElementById("city_select").selectedIndex
-          ].text; // Lấy tên thành phố
-  
+        ].text;
+        
+        const shippingFee = document.querySelector('input[name="phi_van_chuyen"]').value;
+        const totalAmount = document.querySelector('input[name="tong_tien"]').value;
+        
         const receiverAddress = BaseAddress + ", " + cityText;
         const orderNote = document.getElementById("order_note").value;
         const paymentMethod = document.querySelector(
           'input[name="payment_method"]:checked'
         ).value;
-  
+
         if (!receiverName || !receiverPhone || !receiverAddress) {
           Swal.fire("Lỗi!", "Vui lòng nhập đầy đủ thông tin nhận hàng", "error");
           return;
         }
+
         console.log("receiverAddress: khi gui di", receiverAddress);
         Swal.fire({
           title: "Xác nhận đặt hàng?",
@@ -37,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
               headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
               },
-              body: `receiver_name=${receiverName}&receiver_phone=${receiverPhone}&receiver_address=${receiverAddress}&order_note=${orderNote}&payment_method=${paymentMethod}`,
+              body: `receiver_name=${receiverName}&receiver_phone=${receiverPhone}&receiver_address=${receiverAddress}&order_note=${orderNote}&payment_method=${paymentMethod}&shipping_fee=${shippingFee}&total_amount=${totalAmount}`,
             })
               .then((response) => response.json())
               .then((data) => {
@@ -60,16 +63,16 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         });
       });
-  
+
     // Mobile Menu Handler
     const navbar = document.querySelector(".navbar-collapse");
     const navbarToggler = document.querySelector(".navbar-toggler");
     const body = document.querySelector("body");
-  
+
     // Toggle menu
     navbarToggler.addEventListener("click", function () {
       body.classList.toggle("menu-open");
-  
+
       // Add transition delay to nav items
       const navItems = document.querySelectorAll(".nav-item");
       navItems.forEach((item, index) => {
@@ -78,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
           : `${0.1 * index}s`;
       });
     });
-  
+
     // Close menu when clicking outside
     document.addEventListener("click", function (e) {
       if (
@@ -89,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
         navbarToggler.click();
       }
     });
-  
+
     // Close menu when pressing Escape key
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && navbar.classList.contains("show")) {

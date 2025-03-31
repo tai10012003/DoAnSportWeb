@@ -38,7 +38,6 @@ document.addEventListener("DOMContentLoaded", function () {
           showToast("Có lỗi xảy ra!", "error");
         });
     }
-    // Remove from cart functionality
     function removeFromCart(productId) {
       Swal.fire({
         title: "Xóa sản phẩm?",
@@ -65,45 +64,16 @@ document.addEventListener("DOMContentLoaded", function () {
                   .closest(".cart-item")
                   .remove();
                 updateCartCount(data.cart_count);
-                // Kiểm tra nếu giỏ hàng trống, đặt phí vận chuyển = 0₫
-                const shippingFee =
-                  data.cart_count === 0
-                    ? 0
-                    : data.cart_total >= 500000
-                    ? 0
-                    : 30000;
-  
-                // Cập nhật tổng tiền
-                updateCartTotal(data.cart_total, shippingFee);
-  
-                // Hiển thị thông báo xóa sản phẩm
-                showNotification("Đã xóa sản phẩm khỏi giỏ hàng");
-  
+                location.reload();
                 if (data.cart_count === 0) {
                   document.querySelector(".cart-table").style.display = "none";
                   document.querySelector(".empty-cart-message").style.display =
                     "block";
-                  // location.reload(); // Reload if cart is empty
                 }
               }
             });
         }
       });
-    }
-  
-    // Hàm cập nhật tổng tiền
-    function updateCartTotal(subtotal, shipping) {
-      const subtotalElement = document.getElementById("subtotal");
-      const shippingElement = document.getElementById("shipping-fee");
-      const totalElement = document.getElementById("total-price");
-      console.log("da cap nhat duoc");
-      // Cập nhật giá trị
-      subtotalElement.textContent =
-        new Intl.NumberFormat("vi-VN").format(subtotal) + "₫";
-      shippingElement.textContent =
-        new Intl.NumberFormat("vi-VN").format(shipping) + "₫";
-      totalElement.textContent =
-        new Intl.NumberFormat("vi-VN").format(subtotal + shipping) + "₫";
     }
     // Hàm cập nhật số lượng sản phẩm trong giỏ hàng
     function updateCartCount(cartCount) {

@@ -100,7 +100,7 @@
                         </a>
                     </li>
                     <li class="nav-item nav-item-action ms-lg-4">
-                        <a class="nav-link cart-btn" href="/WebbandoTT/app/views/cart.php">
+                        <a class="nav-link cart-btn" href="/WebbandoTT/gio-hang">
                             <span class="d-none d-lg-none cart-text">Giỏ hàng</span>
                             <i class="bi bi-cart3"></i>
                             <span class="cart-badge">

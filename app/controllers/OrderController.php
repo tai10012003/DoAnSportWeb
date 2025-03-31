@@ -118,7 +118,7 @@ class OrderController extends BaseController {
             
             return [
                 'users' => $users,
-                'payment_methods' => ['COD', 'Banking', 'Momo', 'ZaloPay']
+                'payment_methods' => ['cod', 'banking', 'momo', 'zalopay']
             ];
         } catch (Exception $e) {
             error_log("Error in OrderController::getDataForOrderForm: " . $e->getMessage());

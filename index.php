@@ -48,11 +48,7 @@ switch ($route) {
         require __DIR__ . '/app/views/products.php';
         break;
     
-    case '/don-hang':
-        require __DIR__ . '/app/views/orders.php';
-        break;
-    
-        case '/about':
+    case '/about':
     case '/about.php':
     case '/gioi-thieu':
         require __DIR__ . '/app/views/about.php';
@@ -79,13 +75,21 @@ switch ($route) {
     case '/thanh-toan':
         require __DIR__ . '/app/views/checkout.php';
         break;
-
-    case '/tai-khoan':
+    
+        case '/tai-khoan':
         if (!isset($_SESSION['user_id'])) {
             header('Location: /WebbandoTT/dang-nhap');
             exit;
         }
         require __DIR__ . '/app/views/account.php';
+        break;
+
+    case '/don-hang':
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /WebbandoTT/dang-nhap');
+            exit;
+        }
+        require __DIR__ . '/app/views/orders.php';
         break;
 
     case '/dang-nhap':

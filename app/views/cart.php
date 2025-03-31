@@ -31,7 +31,7 @@ $total = 0;
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb" style="margin-bottom: 0">
                 <li class="breadcrumb-item"><a href="/WebbandoTT">Trang chủ</a></li>
-                <li class="breadcrumb-item"><a href="/WebbandoTT/app/views/cart.php">Giỏ hàng</a></li>
+                <li class="breadcrumb-item"><a href="/WebbandoTT/gio-hang">Giỏ hàng</a></li>
             </ol>
         </nav>
         <div class="row">

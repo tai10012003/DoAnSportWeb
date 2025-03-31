@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Chuyển hướng đến trang giỏ hàng
-    header("Location: /WebbandoTT/app/views/cart.php");
+    header("Location: /WebbandoTT/gio-hang");
     exit();
 } else {
     echo "Phương thức không hợp lệ!";

@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
         confirmButtonColor: "#dc3545",
       }).then((result) => {
         if (result.isConfirmed) {
-          fetch("../api/carts/remove_from_cart.php", {
+          fetch("/WebbandoTT/app/api/carts/remove_from_cart.php", {
             method: "POST",
             headers: {
               "Content-Type": "application/x-www-form-urlencoded",
@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var checkoutbutton = document.querySelector(".btn-checkout");
     if (checkoutbutton) {
       checkoutbutton.addEventListener("click", function () {
-        window.location.href = "/WebbandoTT/don-hang";
+        window.location.href = "/WebbandoTT/thanh-toan";
       });
     }
   

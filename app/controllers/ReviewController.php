@@ -3,7 +3,6 @@ require_once __DIR__ . '/BaseController.php';
 require_once __DIR__ . '/../models/DanhGia.php';
 
 class ReviewController extends BaseController {
-    // Change from private to public so it can be accessed
     public $danhGiaModel;
 
     public function __construct() {

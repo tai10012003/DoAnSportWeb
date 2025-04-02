@@ -1,8 +1,11 @@
 <?php
+ob_start();
+header('Content-Type: application/json; charset=utf-8');
 session_start();
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../models/DonHang.php';
 require_once __DIR__ . '/../../models/ChiTietDonHang.php';
+require_once __DIR__ . '/../../helpers/MailHelper.php';
 
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(['success' => false, 'message' => 'Bạn cần đăng nhập để thanh toán']);
@@ -17,6 +20,16 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
 try {
     $db = new Database();
     $conn = $db->getConnection();
+    
+    // Get user email
+    $stmt = $conn->prepare("SELECT email FROM users WHERE id = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+    $userEmail = $stmt->fetchColumn();
+    
+    if (!$userEmail) {
+        throw new Exception('Không tìm thấy email người dùng');
+    }
+    
     $donHang = new DonHang($conn);
     $chiTietDonHang = new ChiTietDonHang($conn);
 
@@ -41,6 +54,31 @@ try {
     if ($donHang->create()) {
         // Lấy ID đơn hàng vừa tạo
         $don_hang_id = $conn->lastInsertId();
+        $orderItems = [];
+
+        // Xử lý thanh toán MoMo nếu được chọn
+        if ($payment_method === 'momo') {
+            require_once __DIR__ . '/../../helpers/MomoHelper.php';
+            $momo = new MomoHelper();
+            
+            $orderInfo = "Thanh toan don hang #" . $don_hang_id;
+            $momoResponse = $momo->createPayment(
+                $don_hang_id,
+                $total,
+                $orderInfo
+            );
+
+            if ($momoResponse['resultCode'] == 0) {
+                echo json_encode([
+                    'success' => true,
+                    'payment_type' => 'momo',
+                    'payment_url' => $momoResponse['payUrl']
+                ]);
+                exit;
+            } else {
+                throw new Exception('Lỗi tạo thanh toán MoMo: ' . $momoResponse['message']);
+            }
+        }
 
         // Lưu chi tiết đơn hàng
         foreach ($_SESSION['cart'] as $product_id => $item) {
@@ -56,17 +94,68 @@ try {
             $stmt->bindParam(':quantity', $item['quantity'], PDO::PARAM_INT);
             $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
             $stmt->execute();
+
+            // Collect order items for email
+            $orderItems[] = [
+                'ten_sp' => $item['name'],
+                'so_luong' => $item['quantity'],
+                'gia' => $item['price']
+            ];
         }
 
+        // Send confirmation email
+        try {
+            if (!class_exists('PHPMailer\PHPMailer\PHPMailer')) {
+                throw new Exception('PHPMailer không được cài đặt đúng cách');
+            }
+            
+            $mailer = new MailHelper();
+            $mailSent = $mailer->sendOrderConfirmation(
+                $userEmail,
+                [
+                    'receiver_name' => $_POST['receiver_name'],
+                    'receiver_phone' => $_POST['receiver_phone'],
+                    'receiver_address' => $_POST['receiver_address']
+                ],
+                $orderItems,
+                $total,
+                $_POST['payment_method'],
+                date('YmdHi') . $don_hang_id
+            );
+        } catch (Exception $e) {
+            error_log("Email sending failed: " . $e->getMessage());
+            $mailSent = false;
+        }
+
+        // Clear all output buffers
+        while (ob_get_level()) {
+            ob_end_clean();
+        }
+        
         // Xóa giỏ hàng sau khi đặt hàng thành công
         unset($_SESSION['cart']);
 
-        echo json_encode(['success' => true, 'message' => 'Đặt hàng thành công']);
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Lỗi khi đặt hàng']);
+        echo json_encode([
+            'success' => true,
+            'message' => 'Đặt hàng thành công!' . ($mailSent ? ' Thông báo đặt hàng đã gửi Email của bạn.' : ' (Không thể gửi email xác nhận)'),
+            'order_id' => $don_hang_id
+        ], JSON_UNESCAPED_UNICODE);
+        exit;
     }
+    
+    // Clear all output buffers
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    echo json_encode(['success' => false, 'message' => 'Lỗi khi đặt hàng']);
+    
 } catch (Exception $e) {
-    echo json_encode(['success' => false, 'message' => 'Lỗi: ' . $e->getMessage()]);
+    error_log("Checkout Error: " . $e->getMessage());
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    echo json_encode(['success' => false, 'message' => 'Có lỗi xảy ra: ' . $e->getMessage()], JSON_UNESCAPED_UNICODE);
 }
+ob_end_flush();
 
 ?>

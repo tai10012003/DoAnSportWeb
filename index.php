@@ -171,6 +171,10 @@ switch ($route) {
         $userController->logout();
         break;
 
+    case '/thanh-toan/ket-qua':
+        require __DIR__ . '/app/views/payment_result.php';
+         break;
+
     // Dynamic routes
     case (preg_match('/^\/san-pham\/[\w-]+$/', $route) ? true : false):
         $ma_sp = basename($route);
@@ -439,6 +443,14 @@ switch ($route) {
             exit;
         }
         require __DIR__ . '/app/views/admin/orders/edit.php';
+        break;
+
+    case '/admin/revenue':
+        if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+            header('Location: /WebbandoTT/dang-nhap');
+            exit;
+        }
+        require __DIR__ . '/app/views/admin/revenue/index.php';
         break;
 
     default:

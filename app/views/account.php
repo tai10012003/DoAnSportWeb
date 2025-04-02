@@ -39,7 +39,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                 <div class="account-wrapper">
                     <div class="account-content">
                         <div class="account-section">
-                            <h5 class="section-title">
+                            <h5 class="section-titles">
                                 <i class="bi bi-person-circle me-2"></i>
                                 THÔNG TIN CÁ NHÂN
                             </h5>

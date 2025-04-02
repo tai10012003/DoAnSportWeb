@@ -17,6 +17,8 @@ $featuredProducts = $homeController->index();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link href="/WebbandoTT/app/public/css/style.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="/WebbandoTT/app/public/css/chatbot.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
     <?php 
@@ -294,10 +296,12 @@ $featuredProducts = $homeController->index();
             </div>
         </div>
     </section>
+    <?php require_once __DIR__ . '/../views/components/chatbot.php'; ?>
     <?php include __DIR__ . '/../../includes/footer.php'; ?>
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/WebbandoTT/app/public/js/main.js"></script>
+    <script src="/WebbandoTT/app/public/js/chatbot.js"></script>
 </body>
 </html>

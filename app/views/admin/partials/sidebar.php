@@ -15,6 +15,12 @@
                     <span>Tổng quan</span>
                 </a>
             </div>
+            <div class="nav-item">
+                <a href="/WebbandoTT/admin/revenue" class="nav-link <?php echo $route === '/admin/revenue' ? 'active' : ''; ?>">
+                    <i class='bx bx-line-chart'></i>
+                    <span>Thống kê doanh thu</span>
+                </a>
+            </div>
         </div>
 
         <div class="sidebar-section">

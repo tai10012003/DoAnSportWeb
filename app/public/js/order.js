@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
-    document
-      .getElementById("confirm-order")
-      ?.addEventListener("click", function () {
+    document.getElementById("confirm-order")?.addEventListener("click", function (e) {
+        e.preventDefault();
+        
         const receiverName = document.getElementById("receiver_name").value;
         const receiverPhone = document.getElementById("receiver_phone").value;
         const BaseAddress = document.getElementById("receiver_address").value;
@@ -24,45 +24,76 @@ document.addEventListener("DOMContentLoaded", function () {
           return;
         }
 
-        console.log("receiverAddress: khi gui di", receiverAddress);
+        const formData = new FormData();
+        formData.append('receiver_name', receiverName);
+        formData.append('receiver_phone', receiverPhone);
+        formData.append('receiver_address', receiverAddress);
+        formData.append('order_note', orderNote);
+        formData.append('payment_method', paymentMethod);
+        formData.append('shipping_fee', shippingFee);
+        formData.append('total_amount', totalAmount);
+
         Swal.fire({
-          title: "Xác nhận đặt hàng?",
-          text: "Bạn có chắc chắn muốn đặt hàng không?",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonText: "Đặt hàng",
-          cancelButtonText: "Hủy",
-          confirmButtonColor: "#28a745",
+            title: "Xác nhận đặt hàng?",
+            text: "Bạn có chắc chắn muốn đặt hàng không?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Đặt hàng",
+            cancelButtonText: "Hủy",
+            confirmButtonColor: "#28a745",
         }).then((result) => {
-          if (result.isConfirmed) {
-            fetch("/WebbandoTT/app/api/carts/checkout.php", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-              },
-              body: `receiver_name=${receiverName}&receiver_phone=${receiverPhone}&receiver_address=${receiverAddress}&order_note=${orderNote}&payment_method=${paymentMethod}&shipping_fee=${shippingFee}&total_amount=${totalAmount}`,
-            })
-              .then((response) => response.json())
-              .then((data) => {
-                if (data.success) {
-                  Swal.fire(
-                    "Thành công",
-                    "Đơn hàng của bạn đã được đặt!",
-                    "success"
-                  ).then(() => {
-                    window.location.href = "/WebbandoTT/don-hang";
-                  });
-                } else {
-                  Swal.fire("Lỗi!", data.message || "Đặt hàng thất bại", "error");
-                }
-              })
-              .catch((error) => {
-                console.error("Lỗi:", error);
-                Swal.fire("Lỗi!", "Có lỗi xảy ra khi đặt hàng", "error");
-              });
-          }
+            if (result.isConfirmed) {
+                // Show loading
+                Swal.fire({
+                    title: 'Đang xử lý...',
+                    text: 'Vui lòng chờ trong giây lát',
+                    allowOutsideClick: false,
+                    didOpen: () => { Swal.showLoading(); }
+                });
+
+                fetch("/WebbandoTT/app/api/carts/checkout.php", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(async response => {
+                    const text = await response.text();
+                    try {
+                        return JSON.parse(text);
+                    } catch (e) {
+                        console.error('Raw server response:', text);
+                        throw new Error('Server response was not valid JSON. Please check server logs.');
+                    }
+                })
+                .then(data => {
+                    if (data.success) {
+                        if (data.payment_type === 'momo') {
+                            // Chuyển hướng đến trang thanh toán MoMo
+                            window.location.href = data.payment_url;
+                        } else {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Thành công!",
+                                text: data.message,
+                                confirmButtonText: "Xem đơn hàng"
+                            }).then(() => {
+                                window.location.href = "/WebbandoTT/don-hang";
+                            });
+                        }
+                    } else {
+                        throw new Error(data.message || 'Đặt hàng không thành công');
+                    }
+                })
+                .catch(error => {
+                    console.error("Error details:", error);
+                    Swal.fire({
+                        icon: "error",
+                        title: "Lỗi!",
+                        text: error.message || "Có lỗi xảy ra khi đặt hàng. Vui lòng thử lại sau."
+                    });
+                });
+            }
         });
-      });
+    });
 
     // Mobile Menu Handler
     const navbar = document.querySelector(".navbar-collapse");

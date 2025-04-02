@@ -421,6 +421,46 @@ $stmt->execute([$ma_sp]);
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/WebbandoTT/app/public/js/main.js"></script>
 <script>
+    
+    document.getElementById('reviewForm')?.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const submitBtn = this.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        
+        const formData = new FormData(this);
+
+        fetch('/WebbandoTT/api/reviews/add', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Thành công',
+                    text: data.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    window.location.reload();
+                });
+            } else {
+                throw new Error(data.message || 'Có lỗi xảy ra khi gửi đánh giá');
+            }
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi',
+                text: error.message || 'Không thể gửi đánh giá'
+            });
+        })
+        .finally(() => {
+            submitBtn.disabled = false;
+        });
+    });
+
     document.getElementById('addToCartForm').addEventListener('submit', async function(e) {
         e.preventDefault(); // Ngăn chặn hành vi mặc định của form
 
@@ -468,45 +508,6 @@ $stmt->execute([$ma_sp]);
 
     document.querySelector('.detail-add-cart-form')?.addEventListener('submit', function(e) {
         e.preventDefault();
-    });
-
-    document.getElementById('reviewForm')?.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const submitBtn = this.querySelector('button[type="submit"]');
-        submitBtn.disabled = true;
-        
-        const formData = new FormData(this);
-
-        fetch('/WebbandoTT/api/reviews/add', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Thành công',
-                    text: data.message,
-                    showConfirmButton: false,
-                    timer: 1500
-                }).then(() => {
-                    window.location.reload();
-                });
-            } else {
-                throw new Error(data.message || 'Có lỗi xảy ra khi gửi đánh giá');
-            }
-        })
-        .catch(error => {
-            Swal.fire({
-                icon: 'error',
-                title: 'Lỗi',
-                text: error.message || 'Không thể gửi đánh giá'
-            });
-        })
-        .finally(() => {
-            submitBtn.disabled = false;
-        });
     });
 </script>
 

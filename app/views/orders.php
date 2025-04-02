@@ -198,7 +198,7 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 html += `
                                     <tr>
                                         <td>
-                                            <div class="order-product-info">
+                                            <div class="order-product-infos">
                                                 <div class="order-product-image">
                                                     <img src="/WebbandoTT/public/uploads/products/${item.hinh_anh}" 
                                                          alt="${item.ten_sp}">

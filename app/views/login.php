@@ -29,7 +29,6 @@ $google_login_url = $client->createAuthUrl();
                     <i class="bi bi-person-plus-fill"></i> Đăng ký
                 </button>
             </div>
-
             <div class="auth-form-container">
                 <form id="loginForm" class="auth-form" method="post" action="/WebbandoTT/user/login" onsubmit="return validateLoginForm()">
                     <h2 class="auth-title">Đăng nhập Sport Elite</h2>
@@ -63,7 +62,7 @@ $google_login_url = $client->createAuthUrl();
                             <i class="bi bi-eye-slash toggle-password"></i>
                         </div>
                     </div>
-
+    
                     <div class="form-options">
                         <label class="remember-me">
                             <input type="checkbox" name="remember">
@@ -91,7 +90,6 @@ $google_login_url = $client->createAuthUrl();
                             Facebook
                         </button>
                     </div>
-
                     <div class="auth-footer">
                         <p>Chưa có tài khoản? <a href="WebbandoTT/dang-ky">Đăng ký ngay</a></p>
                     </div>
@@ -102,7 +100,6 @@ $google_login_url = $client->createAuthUrl();
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Toggle password visibility
         const togglePasswordBtns = document.querySelectorAll('.toggle-password');
         togglePasswordBtns.forEach(btn => {
             btn.addEventListener('click', function() {
@@ -119,13 +116,12 @@ $google_login_url = $client->createAuthUrl();
             });
         });
 
-        // Form validation
         function validateLoginForm() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             let isValid = true;
 
-            // Reset previous errors
+
             document.querySelectorAll('.input-group').forEach(group => {
                 group.classList.remove('error');
             });
@@ -133,7 +129,6 @@ $google_login_url = $client->createAuthUrl();
                 msg.remove();
             });
 
-            // Email validation
             if (!email || !/\S+@\S+\.\S+/.test(email)) {
                 showError('email', 'Email không hợp lệ');
                 isValid = false;
@@ -160,13 +155,11 @@ $google_login_url = $client->createAuthUrl();
             inputGroup.parentElement.appendChild(errorDiv);
         }
 
-        // Social login functions
         window.loginWithGoogle = function() {
             window.location.href = '<?= $google_login_url ?>';
         }
 
         window.loginWithFacebook = function() {
-            // Facebook login implementation
             console.log('Facebook login clicked');
         }
     });

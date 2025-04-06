@@ -134,7 +134,6 @@ $google_login_url = $client->createAuthUrl();
                 isValid = false;
             }
 
-            // Password validation
             if (!password || password.length < 6) {
                 showError('password', 'Mật khẩu phải có ít nhất 6 ký tự');
                 isValid = false;
@@ -142,7 +141,6 @@ $google_login_url = $client->createAuthUrl();
 
             return isValid;
         }
-
         function showError(inputId, message) {
             const input = document.getElementById(inputId);
             const inputGroup = input.parentElement;
@@ -158,7 +156,6 @@ $google_login_url = $client->createAuthUrl();
         window.loginWithGoogle = function() {
             window.location.href = '<?= $google_login_url ?>';
         }
-
         window.loginWithFacebook = function() {
             console.log('Facebook login clicked');
         }

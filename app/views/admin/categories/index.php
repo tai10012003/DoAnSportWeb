@@ -103,6 +103,8 @@ $categories = $data['categories'];
                                                title="Sửa">
                                                 <i class='bx bx-edit-alt'></i>
                                             </a>
+
+                                            
                                             <button class="btn-action delete delete-category" 
                                                     data-id="<?= $category['id'] ?>" 
                                                     title="Xóa">

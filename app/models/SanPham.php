@@ -3,7 +3,7 @@ class SanPham {
     private $conn;
     private $table_name = "san_pham";
 
-
+    // Thuộc tính đối tượng
     public $id;
     public $ma_sp;
     public $ten_sp;

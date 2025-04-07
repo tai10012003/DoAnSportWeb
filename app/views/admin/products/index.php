@@ -166,3 +166,12 @@ $brands = $data['brands'];
     <script src="/WebbandoTT/app/public/js/admin/products.js"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+

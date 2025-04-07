@@ -126,6 +126,10 @@ $brands = $data['brands'];
                                                title="Sửa">
                                                 <i class='bx bx-edit-alt'></i>
                                             </a>
+
+
+
+                                            
                                             <button class="btn-action delete delete-product" 
                                                     data-id="<?= $product['id'] ?>" 
                                                     title="Xóa">

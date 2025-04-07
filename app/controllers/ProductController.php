@@ -157,13 +157,3 @@ class ProductController extends BaseController {
     }
 }
 ?>
-
-
-
-
-
-
-
-
-
-

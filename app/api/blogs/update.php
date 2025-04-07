@@ -5,6 +5,7 @@ ini_set('display_errors', 1);
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../models/BaiViet.php';
 
+
 try {
     // Log request data
     error_log("Update request received: " . print_r($_POST, true));

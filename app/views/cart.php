@@ -80,7 +80,10 @@
 
 
 
+
             
+
+
 
             <?php if (!empty($_SESSION['cart'])): ?>
                 <div class="col-lg-4">

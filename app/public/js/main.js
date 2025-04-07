@@ -1,5 +1,6 @@
 // Cart functionality
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
+    
     // Add to cart functionality
     function addToCart(productId, quantity = 1) {
         const data = new URLSearchParams();

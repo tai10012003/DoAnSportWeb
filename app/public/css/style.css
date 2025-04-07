@@ -873,12 +873,7 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
   }
-
-
-
-
-
-
+  
   .counter-label {
       color: white;
       font-size: 1.1rem;
@@ -936,9 +931,6 @@
       font-weight: 600;
       margin-bottom: 1rem;
   }
-  
-
-
   
   .product-badge {
       position: absolute;

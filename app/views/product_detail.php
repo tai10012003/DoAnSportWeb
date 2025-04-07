@@ -332,7 +332,7 @@ $stmt->execute([$ma_sp]);
 
         <div class="related-products">
             <h3 class="section-title">SẢN PHẨM LIÊN QUAN</h3>
-            
+
             <div class="row g-4">
                 <?php
                 $sql = "SELECT sp.*, dm.ten_danh_muc, th.ten_thuong_hieu,
@@ -477,7 +477,6 @@ $stmt->execute([$ma_sp]);
         });
 
     });
-
     document.getElementById('addToCartForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         const formData = new FormData(this);
@@ -528,3 +527,12 @@ $stmt->execute([$ma_sp]);
 </script>
 
 <?php include 'includes/footer.php'; ?>
+
+
+
+
+
+
+
+
+

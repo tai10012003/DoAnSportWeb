@@ -107,10 +107,6 @@ $categories = $data['categories'];
                                                     data-id="<?= $category['id'] ?>" 
                                                     title="Xóa">
                                                 <i class='bx bx-trash'></i>
-
-
-
-                                                
                                             </button>
                                         </div>
                                     </td>

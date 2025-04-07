@@ -12,15 +12,9 @@ try {
     $db = $database->getConnection();
     $danhMuc = new DanhMuc($db);
 
-
-    
-    
     if (empty($_POST['ma_danh_muc']) || empty($_POST['ten_danh_muc'])) {
         throw new Exception('Vui lòng điền đầy đủ thông tin bắt buộc');
     }
-
-
-    
 
     $fileName = null;
     if (isset($_FILES['hinh_anh']) && $_FILES['hinh_anh']['error'] === 0) {
@@ -36,8 +30,6 @@ try {
             throw new Exception('Không thể tải lên hình ảnh');
         }
     }
-
-
 
     $danhMuc->ma_danh_muc = trim($_POST['ma_danh_muc']);
     $danhMuc->ten_danh_muc = trim($_POST['ten_danh_muc']);

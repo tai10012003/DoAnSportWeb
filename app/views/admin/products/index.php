@@ -131,9 +131,6 @@ $brands = $data['brands'];
                                                     title="Xóa">
                                                 <i class='bx bx-trash'></i>
                                             </button>
-
-
-                                            
                                         </div>
                                     </td>
                                 </tr>

@@ -82,6 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
             timeout = setTimeout(later, wait);
         };
     }
+<<<<<<< Updated upstream
 });
 
 
@@ -93,3 +94,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+=======
+});
+>>>>>>> Stashed changes

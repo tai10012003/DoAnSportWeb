@@ -7,6 +7,9 @@ require_once __DIR__ . '/../../models/NguoiDung.php';
 
 
 
+
+
+
 try {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         throw new Exception('Method not allowed');

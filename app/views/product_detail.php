@@ -215,7 +215,6 @@ $stmt->execute([$ma_sp]);
             </div>
         </div>
 
-        <!-- Product Tabs -->
         <div class="detail-tabs">
             <ul class="nav nav-tabs detail-tab-nav" role="tablist">
                 <li class="nav-item">
@@ -265,6 +264,7 @@ $stmt->execute([$ma_sp]);
                     
                     <div id="reviews" class="tab-pane fade">
                         <div class="review-form mb-4">
+
                             <?php if (isset($_SESSION['user_id'])): ?>
                                 <form id="reviewForm">
                                     <input type="hidden" name="san_pham_id" value="<?= $product['id'] ?>">
@@ -288,6 +288,7 @@ $stmt->execute([$ma_sp]);
                                     Vui lòng <a href="/WebbandoTT/dang-nhap">đăng nhập</a> để viết đánh giá
                                 </div>
                             <?php endif; ?>
+
                         </div>
 
                         <div class="reviews-list mt-4">
@@ -310,14 +311,17 @@ $stmt->execute([$ma_sp]);
                                         </div>
                                     </div>
                                 <?php endforeach; ?>
+
                             <?php else: ?>
                                 <div class="text-center p-4">
                                     <div class="mb-3"><i class="bi bi-chat-square-text" style="font-size: 2rem;"></i></div>
                                     <p class="text-muted">Chưa có đánh giá nào cho sản phẩm này</p>
                                     <?php if (isset($_SESSION['user_id'])): ?>
                                         <p>Hãy là người đầu tiên đánh giá sản phẩm!</p>
+
                                     <?php endif; ?>
                                 </div>
+
                             <?php endif; ?>
                         </div>
                     </div>
@@ -379,6 +383,7 @@ $stmt->execute([$ma_sp]);
                                     </a>
                                 </div>
                             </div>
+
                             <div class="product-info">
                                 <a href="/WebbandoTT/san-pham/<?= htmlspecialchars($related['ma_sp']) ?>" 
                                    class="text-decoration-none">
@@ -429,13 +434,12 @@ $stmt->execute([$ma_sp]);
         e.preventDefault();
         const submitBtn = this.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
-        
         const formData = new FormData(this);
-
         fetch('/WebbandoTT/api/reviews/add', {
             method: 'POST',
             body: formData
         })
+
         .then(response => response.json())
         .then(data => {
             if (data.success) {
@@ -452,6 +456,7 @@ $stmt->execute([$ma_sp]);
                 throw new Error(data.message || 'Có lỗi xảy ra khi gửi đánh giá');
             }
         })
+
         .catch(error => {
             Swal.fire({
                 icon: 'error',
@@ -477,11 +482,10 @@ $stmt->execute([$ma_sp]);
             const result = await response.json();
 
             if (result.success) {
-                // Cập nhật số lượng sản phẩm trong giỏ hàng
-                alert(result.message); // Hiển thị thông báo thành công
-                updateCartCount(result.cart_count); // Cập nhật số lượng giỏ hàng
+                alert(result.message);
+                updateCartCount(result.cart_count);
             } else {
-                alert(result.message); // Hiển thị thông báo lỗi
+                alert(result.message);
             }
         } catch (error) {
             console.error('Error:', error);

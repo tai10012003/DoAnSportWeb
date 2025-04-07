@@ -782,7 +782,7 @@
   }
   
   .product-image {
-      height: 250px; /* Chiều cao cố định cho ảnh */
+      height: 250px;
       overflow: hidden;
       position: relative;
   }
@@ -807,6 +807,8 @@
       -webkit-box-orient: vertical;
   }
   
+
+
   .product-desc {
       font-size: 0.9rem;
       color: #666;
@@ -825,7 +827,8 @@
       margin-bottom: 0.5rem;
   }
   
-  /* New Homepage Sections */
+
+
   .why-choose-us {
       padding: 10px 0 60px 0;
       background: var(--light-color);
@@ -838,6 +841,10 @@
       overflow: hidden;
   }
   
+
+
+
+
   .stats-counter::before {
       content: '';
       position: absolute;
@@ -847,8 +854,6 @@
       bottom: 0;
       background: linear-gradient(45deg, rgba(0,0,0,0.2), rgba(0,0,0,0));
   }
-
-  
   
   .counter-box {
       text-align: center;
@@ -911,6 +916,8 @@
       font-style: italic;
       margin-bottom: 1rem;
   }
+  
+
   
   .newsletter-section {
       padding: 4rem 0;

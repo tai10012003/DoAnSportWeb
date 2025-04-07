@@ -253,12 +253,3 @@ $brands = $data['brands'];
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-

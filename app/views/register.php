@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <link href="/WebbandoTT/app/public/css/auth.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="auth-wrapper">
         <div class="auth-container">
@@ -26,14 +28,14 @@
                     <h2 class="auth-title">Đăng ký tài khoản</h2>
                     <p class="auth-subtitle">Tham gia cùng Sport Elite ngay hôm nay!</p>
 
-                    <?php if(isset($_SESSION['register_error'])): ?>
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <?php 
-                        echo htmlspecialchars($_SESSION['register_error']);
-                        unset($_SESSION['register_error']);
-                        ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
+                    <?php if (isset($_SESSION['register_error'])): ?>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <?php
+                            echo htmlspecialchars($_SESSION['register_error']);
+                            unset($_SESSION['register_error']);
+                            ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                     <?php endif; ?>
 
                     <div class="form-group">
@@ -124,6 +126,7 @@
             });
         });
 
+        //xu ly thong tin nguoi dung
         function validateRegisterForm() {
             const username = document.getElementById('username').value;
             const email = document.getElementById('email').value;
@@ -171,4 +174,5 @@
         }
     </script>
 </body>
+
 </html>

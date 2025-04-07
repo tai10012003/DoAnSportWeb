@@ -3,7 +3,6 @@ class SanPham {
     private $conn;
     private $table_name = "san_pham";
 
-    // Thuộc tính đối tượng
     public $id;
     public $ma_sp;
     public $ten_sp;
@@ -15,8 +14,8 @@ class SanPham {
     public $hinh_anh;
     public $danh_muc_id;
     public $thuong_hieu_id;
-    public $tinh_trang; // 1: Còn hàng, 0: Hết hàng
-    public $noi_bat;    // 1: Nổi bật, 0: Không nổi bật
+    public $tinh_trang;
+    public $noi_bat;
     public $luot_xem;
     public $created_at;
     public $updated_at;
@@ -101,7 +100,6 @@ class SanPham {
         if ($id) {
             $stmt->bindParam(":id", $id);
         }
-        
         $stmt->execute();
         return $stmt;
     }
@@ -184,8 +182,6 @@ class SanPham {
         
         return $stmt->execute();
     }
-
-    // Các phương thức bổ sung
 
     public function getByCategory($danh_muc_id, $limit = null) {
         $query = "SELECT * FROM " . $this->table_name . " WHERE danh_muc_id = :danh_muc_id";

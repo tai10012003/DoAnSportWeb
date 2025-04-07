@@ -16,11 +16,11 @@ class HomeController extends BaseController {
     public function index() {
         try {
             $featuredProducts = $this->sanPhamModel->getFeaturedProducts(8);
-            
-            // Thêm đánh giá cho mỗi sản phẩm
             foreach ($featuredProducts as &$product) {
                 $avgRating = $this->danhGiaModel->getAverageRating($product['id']);
+
                 $product['avg_rating'] = round($avgRating['avg_rating'] ?? 0, 1);
+                
                 $product['total_reviews'] = $avgRating['total_reviews'] ?? 0;
             }
 

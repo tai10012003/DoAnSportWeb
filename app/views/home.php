@@ -75,7 +75,6 @@ $featuredProducts = $homeController->index();
             <span class="carousel-control-next-icon"></span>
         </button>
     </div>
-
     <section class="categories bg-light" style="padding: 100px 0 50px 0;">
         <div class="container">
             <h2 class="section-title">DANH MỤC SẢN PHẨM</h2>
@@ -105,6 +104,9 @@ $featuredProducts = $homeController->index();
         </div>
     </section>
 
+
+
+
     <section class="brands py-5">
         <div class="container">
             <h2 class="section-title">THƯƠNG HIỆU NỔI TIẾNG</h2>
@@ -124,11 +126,16 @@ $featuredProducts = $homeController->index();
             </div>
         </div>
     </section>
+
+
+
+
+
     <section class="featured-products bg-light">
         <div class="container"> 
-            
-            <h2 class="section-title">SẢN PHẨM NỔI BẬT</h2>
 
+            <h2 class="section-title">SẢN PHẨM NỔI BẬT</h2>
+            
             <div class="row g-4">
                 <?php
                 if (!empty($featuredProducts)) {
@@ -143,10 +150,10 @@ $featuredProducts = $homeController->index();
                             ? "/WebbandoTT/public/uploads/products/" . $product['hinh_anh']
                             : "/WebbandoTT/app/public/images/products/no-image.jpg";
                         ?>
+                        
                         <div class="col-lg-3 col-md-6">
                             <div class="product-card">
                                 <div class="product-badge">-20%</div>
-
                                 <div class="product-image">
                                     <a href="/WebbandoTT/san-pham/<?= htmlspecialchars($product['ma_sp']) ?>" class="product-link">
                                         <img src="<?= htmlspecialchars($imagePath) ?>" 
@@ -165,7 +172,6 @@ $featuredProducts = $homeController->index();
                                         </a>
                                     </div>
                                 </div>
-
                                 <div class="product-info">
                                     <a href="/WebbandoTT/san-pham/<?= htmlspecialchars($product['ma_sp']) ?>" class="text-decoration-none">
                                         <h3 class="product-title"><?= htmlspecialchars($product['ten_sp']) ?></h3>
@@ -174,7 +180,7 @@ $featuredProducts = $homeController->index();
                                         <span class="price-new"><?= number_format($product['gia_khuyen_mai'] ?? $product['gia']) ?>₫</span>
                                         <span class="price-old"><?= number_format($product['gia']) ?>₫</span>
                                     </div>
-
+                                    
                                     <div class="product-rating"> 
                                             <?php for($i = 1; $i <= 5; $i++): ?>
                                                 <?php if ($i <= floor($avgRating)): ?>
@@ -201,6 +207,10 @@ $featuredProducts = $homeController->index();
             </div>
         </div>
     </section>
+
+
+
+
     <section class="stats-counter">
         <div class="container">
             <div class="row g-4">
@@ -231,7 +241,6 @@ $featuredProducts = $homeController->index();
             </div>
         </div>
     </section>
-    
     <section class="features bg-light">
         <div class="container">
             <div class="row g-4 text-center">
@@ -292,6 +301,7 @@ $featuredProducts = $homeController->index();
     </section>
     <?php require_once __DIR__ . '/../views/components/chatbot.php'; ?>
     <?php include __DIR__ . '/../../includes/footer.php'; ?>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/WebbandoTT/app/public/js/main.js"></script>
     <script src="/WebbandoTT/app/public/js/chatbot.js"></script>

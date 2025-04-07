@@ -9,6 +9,8 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $db = new Database();
     $conn = $db->getConnection();

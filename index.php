@@ -117,8 +117,7 @@ switch ($route) {
         session_destroy();
         header('Location: /WebbandoTT/dang-nhap');
         exit;
-
-    // API Routes
+        
     case '/api/san-pham/search':
         header('Content-Type: application/json');
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -175,7 +174,6 @@ switch ($route) {
         require __DIR__ . '/app/views/payment_result.php';
          break;
 
-    // Dynamic routes
     case (preg_match('/^\/san-pham\/[\w-]+$/', $route) ? true : false):
         $ma_sp = basename($route);
         require __DIR__ . '/app/views/product_detail.php';

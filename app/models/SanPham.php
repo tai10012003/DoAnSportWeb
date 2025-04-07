@@ -3,6 +3,7 @@ class SanPham {
     private $conn;
     private $table_name = "san_pham";
 
+    // Thuộc tính đối tượng
     public $id;
     public $ma_sp;
     public $ten_sp;
@@ -100,6 +101,7 @@ class SanPham {
         if ($id) {
             $stmt->bindParam(":id", $id);
         }
+        
         $stmt->execute();
         return $stmt;
     }
@@ -200,20 +202,19 @@ class SanPham {
     public function getAllProducts($page = 1, $limit = 10) {
         try {
             $start = ($page - 1) * $limit;
-            
             $query = "SELECT sp.*, dm.ten_danh_muc, th.ten_thuong_hieu 
                      FROM " . $this->table_name . " sp
                      LEFT JOIN danh_muc dm ON sp.danh_muc_id = dm.id
                      LEFT JOIN thuong_hieu th ON sp.thuong_hieu_id = th.id
                      ORDER BY sp.created_at DESC
                      LIMIT :start, :limit";
+
             $stmt = $this->conn->prepare($query);
             $stmt->bindValue(':start', $start, PDO::PARAM_INT);
             $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
             $stmt->execute();
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
         } catch(PDOException $e) {
             error_log("Error in getAllProducts: " . $e->getMessage());
             return [];

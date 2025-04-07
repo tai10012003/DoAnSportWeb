@@ -11,6 +11,8 @@ try {
         throw new Exception('Method not allowed');
     }
 
+
+    
     $database = Database::getInstance();
     $db = $database->getConnection();
     $nguoiDung = new NguoiDung($db);

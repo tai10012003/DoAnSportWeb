@@ -11,6 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 
 
 
+
 $db = new Database();
 $conn = $db->getConnection();
 

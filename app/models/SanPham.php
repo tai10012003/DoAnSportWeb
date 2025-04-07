@@ -3,6 +3,7 @@ class SanPham {
     private $conn;
     private $table_name = "san_pham";
 
+
     public $id;
     public $ma_sp;
     public $ten_sp;

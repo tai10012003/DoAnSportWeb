@@ -847,6 +847,8 @@
       bottom: 0;
       background: linear-gradient(45deg, rgba(0,0,0,0.2), rgba(0,0,0,0));
   }
+
+  
   
   .counter-box {
       text-align: center;
@@ -916,7 +918,6 @@
       color: white;
   }
   
-  /* Product Listing Page */
   .filter-sidebar {
       background: white;
       padding: 1.5rem;

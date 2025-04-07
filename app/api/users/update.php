@@ -13,6 +13,8 @@ try {
 
 
     
+
+
     $database = Database::getInstance();
     $db = $database->getConnection();
     $nguoiDung = new NguoiDung($db);

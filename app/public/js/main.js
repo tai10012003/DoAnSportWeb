@@ -394,7 +394,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const navbar = document.querySelector(".navbar-collapse");
     const navbarToggler = document.querySelector(".navbar-toggler");
   
-    // Close menu when clicking outside
     document.addEventListener("click", function (e) {
       if (
         !navbar.contains(e.target) &&
@@ -405,7 +404,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   
-    // Handle dropdown menus on mobile
     const dropdowns = document.querySelectorAll(".nav-item.dropdown");
   
     dropdowns.forEach((dropdown) => {
@@ -417,7 +415,6 @@ document.addEventListener("DOMContentLoaded", function () {
           e.preventDefault();
           e.stopPropagation();
   
-          // Close other open submenus
           dropdowns.forEach((other) => {
             if (other !== dropdown) {
               other.querySelector(".submenu").classList.remove("show");
@@ -425,14 +422,12 @@ document.addEventListener("DOMContentLoaded", function () {
             }
           });
   
-          // Toggle current submenu
           submenu.classList.toggle("show");
           link.classList.toggle("active");
         });
       }
     });
-  
-    // Close mobile menu when clicking outside
+
     document.addEventListener("click", function (e) {
       if (!e.target.closest(".navbar")) {
         document.querySelector(".navbar-collapse").classList.remove("show");

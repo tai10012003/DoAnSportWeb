@@ -870,7 +870,7 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
   }
-  
+
   .counter-label {
       color: white;
       font-size: 1.1rem;
@@ -916,7 +916,6 @@
       color: white;
   }
   
-  /* Product Listing Page */
   .filter-sidebar {
       background: white;
       padding: 1.5rem;
@@ -929,6 +928,9 @@
       font-weight: 600;
       margin-bottom: 1rem;
   }
+  
+
+
   
   .product-badge {
       position: absolute;

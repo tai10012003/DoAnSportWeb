@@ -108,6 +108,8 @@ $brands = $data['brands'];
                                                     title="Xóa">
                                                 <i class='bx bx-trash'></i>
                                             </button>
+
+                                            
                                         </div>
                                     </td>
                                 </tr>
@@ -142,3 +144,14 @@ $brands = $data['brands'];
     <script src="/WebbandoTT/app/public/js/admin/brands.js"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+

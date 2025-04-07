@@ -5,9 +5,9 @@ checkAdminAuth();
 
 $route = $_SERVER['REQUEST_URI'];
 $route = str_replace('/WebbandoTT', '', $route);
-
 $categoryController = new CategoryController();
 $data = $categoryController->index();
+
 
 $categories = $data['categories'];
 ?>
@@ -107,6 +107,10 @@ $categories = $data['categories'];
                                                     data-id="<?= $category['id'] ?>" 
                                                     title="Xóa">
                                                 <i class='bx bx-trash'></i>
+
+
+
+                                                
                                             </button>
                                         </div>
                                     </td>

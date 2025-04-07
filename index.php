@@ -135,7 +135,6 @@ switch ($route) {
             if (!isset($_SESSION['cart'])) {
                 $_SESSION['cart'] = [];
             }
-            // Xử lý thêm vào giỏ hàng
             echo json_encode(['success' => true]);
         }
         break;
@@ -175,7 +174,6 @@ switch ($route) {
         require __DIR__ . '/app/views/payment_result.php';
          break;
 
-    // Dynamic routes
     case (preg_match('/^\/san-pham\/[\w-]+$/', $route) ? true : false):
         $ma_sp = basename($route);
         require __DIR__ . '/app/views/product_detail.php';

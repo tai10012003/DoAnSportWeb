@@ -12,12 +12,16 @@ try {
     $db = $database->getConnection();
     $danhMuc = new DanhMuc($db);
 
-    // Validate required fields
+
+    
+    
     if (empty($_POST['ma_danh_muc']) || empty($_POST['ten_danh_muc'])) {
         throw new Exception('Vui lòng điền đầy đủ thông tin bắt buộc');
     }
 
-    // Handle file upload
+
+    
+
     $fileName = null;
     if (isset($_FILES['hinh_anh']) && $_FILES['hinh_anh']['error'] === 0) {
         $uploadDir = __DIR__ . '/../../../public/uploads/categories/';
@@ -33,7 +37,8 @@ try {
         }
     }
 
-    // Set category data
+
+
     $danhMuc->ma_danh_muc = trim($_POST['ma_danh_muc']);
     $danhMuc->ten_danh_muc = trim($_POST['ten_danh_muc']);
     $danhMuc->mo_ta = trim($_POST['mo_ta'] ?? '');
@@ -48,7 +53,8 @@ try {
             'message' => 'Thêm danh mục thành công'
         ]);
     } else {
-        // Delete uploaded file if category creation fails
+
+
         if ($fileName && file_exists($uploadDir . $fileName)) {
             unlink($uploadDir . $fileName);
         }

@@ -29,9 +29,10 @@ $avgRating = $reviewController->danhGiaModel->getAverageRating($product['id']);
 $averageRating = round($avgRating['avg_rating'] ?? 0, 1);
 $totalReviews = $avgRating['total_reviews'] ?? 0;
 
-// Update views
 $update_sql = "UPDATE san_pham SET luot_xem = luot_xem + 1 WHERE ma_sp = ?";
+
 $stmt = $conn->prepare($update_sql);
+
 $stmt->execute([$ma_sp]);
 
 ?>
@@ -47,7 +48,6 @@ $stmt->execute([$ma_sp]);
         </nav>
 
         <div class="row">
-            <!-- Gallery Section -->
             <div class="col-lg-5">
                 <div class="detail-gallery">
                     <div class="detail-main-image">
@@ -55,6 +55,7 @@ $stmt->execute([$ma_sp]);
                              alt="<?= htmlspecialchars($product['ten_sp']) ?>" 
                              id="main-product-image">
                     </div>
+
                     <div class="detail-thumbnails">
                         <?php
                         $images = [$product['hinh_anh']];
@@ -66,10 +67,11 @@ $stmt->execute([$ma_sp]);
                              onclick="changeMainImage(this.src)">
                         <?php endforeach; ?>
                     </div>
+
                 </div>
             </div>
 
-            <!-- Product Info Section -->
+
             <div class="col-lg-7">
                 <div class="detail-info-wrapper">
                     <h1 class="detail-product-title"><?= htmlspecialchars($product['ten_sp']) ?></h1>
@@ -87,6 +89,7 @@ $stmt->execute([$ma_sp]);
                             <span class="detail-meta-label">Thương hiệu:</span>
                             <span><?= htmlspecialchars($product['ten_thuong_hieu']) ?></span>
                         </div>
+                        
                         <div class="detail-meta-item">
                             <span class="detail-meta-label">Lượt xem:</span>
                             <span><?= number_format($product['luot_xem']) ?></span>
@@ -262,6 +265,7 @@ $stmt->execute([$ma_sp]);
                     
                     <div id="reviews" class="tab-pane fade">
                         <div class="review-form mb-4">
+
                             <?php if (isset($_SESSION['user_id'])): ?>
                                 <form id="reviewForm">
                                     <input type="hidden" name="san_pham_id" value="<?= $product['id'] ?>">
@@ -285,6 +289,7 @@ $stmt->execute([$ma_sp]);
                                     Vui lòng <a href="/WebbandoTT/dang-nhap">đăng nhập</a> để viết đánh giá
                                 </div>
                             <?php endif; ?>
+
                         </div>
 
                         <div class="reviews-list mt-4">
@@ -307,14 +312,17 @@ $stmt->execute([$ma_sp]);
                                         </div>
                                     </div>
                                 <?php endforeach; ?>
+
                             <?php else: ?>
                                 <div class="text-center p-4">
                                     <div class="mb-3"><i class="bi bi-chat-square-text" style="font-size: 2rem;"></i></div>
                                     <p class="text-muted">Chưa có đánh giá nào cho sản phẩm này</p>
                                     <?php if (isset($_SESSION['user_id'])): ?>
                                         <p>Hãy là người đầu tiên đánh giá sản phẩm!</p>
+
                                     <?php endif; ?>
                                 </div>
+
                             <?php endif; ?>
                         </div>
                     </div>
@@ -324,6 +332,7 @@ $stmt->execute([$ma_sp]);
 
         <div class="related-products">
             <h3 class="section-title">SẢN PHẨM LIÊN QUAN</h3>
+            
             <div class="row g-4">
                 <?php
                 $sql = "SELECT sp.*, dm.ten_danh_muc, th.ten_thuong_hieu,
@@ -347,6 +356,7 @@ $stmt->execute([$ma_sp]);
                         ? "/WebbandoTT/public/uploads/products/" . $related['hinh_anh']
                         : "/WebbandoTT/app/public/images/no-image.jpg";
                 ?>
+
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="product-card">
                             <?php if($related['gia_khuyen_mai'] > 0): ?>
@@ -354,12 +364,14 @@ $stmt->execute([$ma_sp]);
                                     -<?= round($related['phan_tram_giam']) ?>%
                                 </div>
                             <?php endif; ?>
+
                             <div class="product-image">
                                 <a href="/WebbandoTT/san-pham/<?= htmlspecialchars($related['ma_sp']) ?>" class="product-link">
                                     <img src="<?= htmlspecialchars($imagePath) ?>" 
                                          alt="<?= htmlspecialchars($related['ten_sp']) ?>"
                                          class="img-fluid">
                                 </a>
+
                                 <div class="product-actions">
                                     <button class="btn btn-light btn-sm add-to-cart" 
                                             data-product-id="<?= $related['id'] ?>"
@@ -376,15 +388,18 @@ $stmt->execute([$ma_sp]);
                                     </a>
                                 </div>
                             </div>
+
                             <div class="product-info">
                                 <a href="/WebbandoTT/san-pham/<?= htmlspecialchars($related['ma_sp']) ?>" 
                                    class="text-decoration-none">
                                     <h3 class="product-title"><?= htmlspecialchars($related['ten_sp']) ?></h3>
                                 </a>
+
                                 <div class="product-category">
                                     <?= htmlspecialchars($related['ten_danh_muc']) ?> | 
                                     <?= htmlspecialchars($related['ten_thuong_hieu']) ?>
                                 </div>
+
                                 <div class="product-price">
                                     <?php if($related['gia_khuyen_mai'] > 0): ?>
                                         <span class="price-new"><?= number_format($related['gia_khuyen_mai']) ?>₫</span>
@@ -393,6 +408,7 @@ $stmt->execute([$ma_sp]);
                                         <span class="price-new"><?= number_format($related['gia']) ?>₫</span>
                                     <?php endif; ?>
                                 </div>
+
                                 <div class="product-rating"> 
                                     <?php for($i = 1; $i <= 5; $i++): ?>
                                             <?php if ($i <= floor($averageRating)): ?>
@@ -421,18 +437,17 @@ $stmt->execute([$ma_sp]);
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/WebbandoTT/app/public/js/main.js"></script>
 <script>
-    
     document.getElementById('reviewForm')?.addEventListener('submit', function(e) {
         e.preventDefault();
         const submitBtn = this.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
-        
-        const formData = new FormData(this);
 
+        const formData = new FormData(this);
         fetch('/WebbandoTT/api/reviews/add', {
             method: 'POST',
             body: formData
         })
+
         .then(response => response.json())
         .then(data => {
             if (data.success) {
@@ -449,6 +464,7 @@ $stmt->execute([$ma_sp]);
                 throw new Error(data.message || 'Có lỗi xảy ra khi gửi đánh giá');
             }
         })
+
         .catch(error => {
             Swal.fire({
                 icon: 'error',
@@ -459,13 +475,12 @@ $stmt->execute([$ma_sp]);
         .finally(() => {
             submitBtn.disabled = false;
         });
+
     });
 
     document.getElementById('addToCartForm').addEventListener('submit', async function(e) {
-        e.preventDefault(); // Ngăn chặn hành vi mặc định của form
-
-        const formData = new FormData(this); // Lấy dữ liệu từ form
-
+        e.preventDefault();
+        const formData = new FormData(this);
         try {
             const response = await fetch('/WebbandoTT/app/api/carts/add_to_cart.php', {
                 method: 'POST',
@@ -474,12 +489,13 @@ $stmt->execute([$ma_sp]);
             const result = await response.json();
 
             if (result.success) {
-                // Cập nhật số lượng sản phẩm trong giỏ hàng
-                alert(result.message); // Hiển thị thông báo thành công
-                updateCartCount(result.cart_count); // Cập nhật số lượng giỏ hàng
+
+                alert(result.message); 
+                updateCartCount(result.cart_count);
             } else {
-                alert(result.message); // Hiển thị thông báo lỗi
+                alert(result.message);
             }
+
         } catch (error) {
             console.error('Error:', error);
             alert('Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng.');
@@ -512,3 +528,8 @@ $stmt->execute([$ma_sp]);
 </script>
 
 <?php include 'includes/footer.php'; ?>
+
+
+
+
+

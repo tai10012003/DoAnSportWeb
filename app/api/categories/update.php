@@ -14,14 +14,11 @@ try {
     $database = Database::getInstance();
     $db = $database->getConnection();
     $danhMuc = new DanhMuc($db);
-
-    // Get existing category first
     $existingCategory = $danhMuc->getCategory($_POST['id']);
     if (!$existingCategory) {
         throw new Exception('Không tìm thấy danh mục');
     }
 
-    // Special handling for danh_muc_cha_id
     $danhMucChaId = !empty($_POST['danh_muc_cha_id']) ? 
                     filter_var($_POST['danh_muc_cha_id'], FILTER_SANITIZE_NUMBER_INT) : 
                     null;
@@ -37,7 +34,6 @@ try {
         'hinh_anh' => $existingCategory['hinh_anh']
     ];
 
-    // Handle file upload if exists
     if (isset($_FILES['hinh_anh']) && $_FILES['hinh_anh']['error'] === 0) {
         $uploadDir = __DIR__ . '/../../../public/uploads/categories/';
         if (!file_exists($uploadDir)) {
@@ -48,7 +44,6 @@ try {
         $uploadFile = $uploadDir . $fileName;
 
         if (move_uploaded_file($_FILES['hinh_anh']['tmp_name'], $uploadFile)) {
-            // Delete old image
             if ($existingCategory['hinh_anh']) {
                 $oldImagePath = $uploadDir . $existingCategory['hinh_anh'];
                 if (file_exists($oldImagePath)) {
@@ -58,8 +53,6 @@ try {
             $data['hinh_anh'] = $fileName;
         }
     }
-
-    // Update category
     foreach ($data as $key => $value) {
         $danhMuc->$key = $value;
     }

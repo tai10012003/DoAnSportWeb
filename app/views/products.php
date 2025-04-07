@@ -6,7 +6,6 @@ if (!isset($_SESSION['cart'])) {
 }
 
 require_once __DIR__ . '/../controllers/ProductController.php';
-
 $productController = new ProductController();
 $data = $productController->filterAndGetProducts();
 $products = $data['products'];
@@ -23,12 +22,14 @@ $filters = $data['filters'];
         <h1 class="display-6 text-center mb-4">SẢN PHẨM THỂ THAO</h1>
         <div class="search-box mb-5">
             <form action="/WebbandoTT/san-pham" method="GET" id="filterForm">
+
                 <div class="input-group">
                     <input type="text" class="form-control" name="search" 
                            placeholder="Tìm kiếm sản phẩm..." 
                            value="<?php echo htmlspecialchars($filters['search'] ?? ''); ?>">
                     <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
                 </div>
+                
             </form>
         </div>
     </div>
@@ -36,10 +37,8 @@ $filters = $data['filters'];
 
 <div class="container py-5">
     <div class="row">
-        <!-- Sidebar lọc sản phẩm -->
         <div class="col-lg-3">
             <div class="filter-sidebar">
-                <!-- Danh mục -->
                 <div class="filter-box mb-4">
                     <h5 class="filter-title border-bottom pb-2 mb-3">Danh Mục</h5>
                     <div class="list-group list-group-flush">
@@ -50,17 +49,19 @@ $filters = $data['filters'];
                                 <?php echo $totalProducts; ?>
                             </span>
                         </a>
+
                         <?php foreach ($categories as $category): ?>
+
                             <a href="/WebbandoTT/san-pham?category=<?php echo $category['id']; ?>" 
                                class="list-group-item list-group-item-action d-flex justify-content-between align-items-center <?php echo ($filters['category'] ?? '') == $category['id'] ? 'active fw-bold' : ''; ?>">
                                 <span><?php echo htmlspecialchars($category['ten_danh_muc']); ?></span>
                                 <i class="bi bi-chevron-right"></i>
+
                             </a>
                         <?php endforeach; ?>
                     </div>
                 </div>
 
-                <!-- Thương hiệu -->
                 <div class="filter-box mb-4">
                     <h5 class="filter-title border-bottom pb-2 mb-3 mt-4">Thương Hiệu</h5>
                     <div class="list-group list-group-flush">
@@ -71,6 +72,7 @@ $filters = $data['filters'];
                                 <?php echo $totalProducts; ?>
                             </span>
                         </a>
+
                         <?php foreach ($brands as $brand): ?>
                             <a href="/WebbandoTT/san-pham?brand=<?php echo $brand['id']; ?>" 
                                class="list-group-item list-group-item-action d-flex justify-content-between align-items-center <?php echo ($filters['brand'] ?? '') == $brand['id'] ? 'active fw-bold' : ''; ?>">
@@ -78,43 +80,48 @@ $filters = $data['filters'];
                                 <i class="bi bi-chevron-right"></i>
                             </a>
                         <?php endforeach; ?>
+
                     </div>
                 </div>
-
-                <!-- Khoảng giá -->
                 <div class="filter-box mb-4">
+
                     <h5 class="filter-title border-bottom pb-2 mb-3 mt-4">Khoảng Giá</h5>
+
                     <div class="d-grid gap-2">
                         <a href="/WebbandoTT/san-pham" 
                            class="btn <?php echo empty($filters['price']) ? 'btn-success' : 'btn-outline-success'; ?> btn-sm">
                             Tất cả
                         </a>
+
                         <a href="/WebbandoTT/san-pham?price=0-500000" 
                            class="btn <?php echo ($filters['price'] ?? '') === '0-500000' ? 'btn-success' : 'btn-outline-success'; ?> btn-sm">
                             Dưới 500.000₫
                         </a>
+
                         <a href="/WebbandoTT/san-pham?price=500000-1000000" 
                            class="btn <?php echo ($filters['price'] ?? '') === '500000-1000000' ? 'btn-success' : 'btn-outline-success'; ?> btn-sm">
                             500.000₫ - 1.000.000₫
                         </a>
+
                         <a href="/WebbandoTT/san-pham?price=1000000-2000000" 
                            class="btn <?php echo ($filters['price'] ?? '') === '1000000-2000000' ? 'btn-success' : 'btn-outline-success'; ?> btn-sm">
                             1.000.000₫ - 2.000.000₫
                         </a>
+
                         <a href="/WebbandoTT/san-pham?price=2000000-5000000" 
                            class="btn <?php echo ($filters['price'] ?? '') === '2000000-5000000' ? 'btn-success' : 'btn-outline-success'; ?> btn-sm">
                             2.000.000₫ - 5.000.000₫
                         </a>
+
                         <a href="/WebbandoTT/san-pham?price=5000000-up" 
                            class="btn <?php echo ($filters['price'] ?? '') === '5000000-up' ? 'btn-success' : 'btn-outline-success'; ?> btn-sm">
                             Trên 5.000.000₫
                         </a>
                     </div>
                 </div>
+
             </div>
         </div>
-
-        <!-- Danh sách sản phẩm -->
         <div class="col-lg-9">
             <div class="product-controls mb-4">
                 <div class="row align-items-center">
@@ -127,6 +134,7 @@ $filters = $data['filters'];
                             Tất cả sản phẩm
                         </a>
                     </div>
+
                     <div class="col-auto">
                         <select class="form-select" id="sortSelect">
                             <option value="">Tất cả</option>
@@ -136,6 +144,7 @@ $filters = $data['filters'];
                         </select>
                     </div>
                 </div>
+
             </div>
 
             <div class="row g-4">
@@ -196,7 +205,12 @@ $filters = $data['filters'];
                                         </div>
                                     </div>
                                 </div>
-                            </div>';
+                            </div>'; 
+
+
+
+
+
                     }
                 } else {
                     echo '<div class="col-12"><p class="text-center">Không tìm thấy sản phẩm nào</p></div>';
@@ -230,7 +244,6 @@ $filters = $data['filters'];
 <script src="/WebbandoTT/app/public/js/main.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Xử lý form tìm kiếm
         const filterForm = document.getElementById('filterForm');
         filterForm.addEventListener('submit', function(e) {
             e.preventDefault();

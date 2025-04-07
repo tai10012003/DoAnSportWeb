@@ -15,8 +15,8 @@ class SanPham {
     public $hinh_anh;
     public $danh_muc_id;
     public $thuong_hieu_id;
-    public $tinh_trang; // 1: Còn hàng, 0: Hết hàng
-    public $noi_bat;    // 1: Nổi bật, 0: Không nổi bật
+    public $tinh_trang;
+    public $noi_bat;
     public $luot_xem;
     public $created_at;
     public $updated_at;
@@ -45,7 +45,6 @@ class SanPham {
         
         $stmt = $this->conn->prepare($query);
         
-        // Sanitize input
         $this->ma_sp = htmlspecialchars(strip_tags($this->ma_sp));
         $this->ten_sp = htmlspecialchars(strip_tags($this->ten_sp));
         $this->mo_ta = htmlspecialchars(strip_tags($this->mo_ta));
@@ -130,7 +129,6 @@ class SanPham {
         
         $stmt = $this->conn->prepare($query);
         
-        // Sanitize input
         $this->ma_sp = htmlspecialchars(strip_tags($this->ma_sp));
         $this->ten_sp = htmlspecialchars(strip_tags($this->ten_sp));
         $this->mo_ta = htmlspecialchars(strip_tags($this->mo_ta));
@@ -150,7 +148,6 @@ class SanPham {
         $this->xuat_xu = htmlspecialchars(strip_tags($this->xuat_xu));
         $this->bao_hanh = htmlspecialchars(strip_tags($this->bao_hanh));
         
-        // Bind values
         $stmt->bindParam(":ma_sp", $this->ma_sp);
         $stmt->bindParam(":ten_sp", $this->ten_sp);
         $stmt->bindParam(":mo_ta", $this->mo_ta);
@@ -185,15 +182,12 @@ class SanPham {
         return $stmt->execute();
     }
 
-    // Các phương thức bổ sung
-
     public function getByCategory($danh_muc_id, $limit = null) {
         $query = "SELECT * FROM " . $this->table_name . " WHERE danh_muc_id = :danh_muc_id";
         
         if ($limit) {
             $query .= " LIMIT " . $limit;
         }
-        
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":danh_muc_id", $danh_muc_id);
         $stmt->execute();
@@ -225,6 +219,7 @@ class SanPham {
 
     public function getFeaturedProducts($limit = 8) {
         try {
+
             $query = "SELECT sp.*, dm.ten_danh_muc, th.ten_thuong_hieu 
                     FROM " . $this->table_name . " sp
                     LEFT JOIN danh_muc dm ON sp.danh_muc_id = dm.id
@@ -319,6 +314,7 @@ class SanPham {
             $query = "SELECT id, ten_thuong_hieu FROM thuong_hieu WHERE trang_thai = 1";
             $stmt = $this->conn->query($query);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
         } catch(PDOException $e) {
             error_log("Error in getAllBrands: " . $e->getMessage());
             return [];
@@ -333,6 +329,7 @@ class SanPham {
             $stmt->execute();
             
             return $stmt->fetch(PDO::FETCH_ASSOC);
+
         } catch(PDOException $e) {
             error_log("Error in getProduct: " . $e->getMessage());
             return null;
@@ -393,12 +390,10 @@ class SanPham {
                 $sql .= " AND (sp.ten_sp LIKE :search OR sp.ma_sp LIKE :search)";
                 $params[':search'] = "%$search%";
             }
-
             if (!empty($categoryId)) {
                 $sql .= " AND sp.danh_muc_id = :category_id";
                 $params[':category_id'] = $categoryId;
             }
-
             if (!empty($priceRange)) {
                 list($min, $max) = explode('-', $priceRange);
                 if ($max === 'up') {
@@ -415,8 +410,6 @@ class SanPham {
                 $sql .= " AND sp.thuong_hieu_id = :brand_id";
                 $params[':brand_id'] = $brandId;
             }
-
-            // Add sorting
             switch ($sort) {
                 case 'promotion':
                     $sql .= " AND sp.gia_khuyen_mai < sp.gia ORDER BY (sp.gia - sp.gia_khuyen_mai) DESC";
@@ -434,12 +427,8 @@ class SanPham {
             $sql .= " LIMIT :offset, :per_page";
 
             $stmt = $this->conn->prepare($sql);
-            
-            // Bind tham số cho LIMIT và OFFSET
             $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
             $stmt->bindValue(':per_page', (int)$perPage, PDO::PARAM_INT);
-
-            // Bind các tham số khác
             foreach ($params as $key => $value) {
                 $stmt->bindValue($key, $value);
             }

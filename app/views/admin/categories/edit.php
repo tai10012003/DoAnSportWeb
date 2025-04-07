@@ -19,6 +19,8 @@ if (!$category) {
     header('Location: /WebbandoTT/admin/categories');
     exit;
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="vi">

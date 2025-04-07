@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liên hệ - Sport Elite</title>
-    
-    <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -13,8 +11,6 @@
 </head>
 <body>
     <?php include __DIR__ . '/../../includes/header.php'; ?>
-
-    <!-- Contact Hero Section -->
     <div class="contact-hero">
         <div class="container">
             <div class="row align-items-center">
@@ -26,11 +22,9 @@
         </div>
     </div>
 
-    <!-- Contact Info Section -->
     <div class="contact-section">
         <div class="container">
             <div class="row">
-                <!-- Contact Information -->
                 <div class="col-lg-4">
                     <div class="contact-info-box">
                         <h3>Thông Tin Liên Hệ</h3>
@@ -66,8 +60,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Contact Form -->
                 <div class="col-lg-8">
                     <div class="contact-form-box">
                         <h3>Gửi Tin Nhắn</h3>

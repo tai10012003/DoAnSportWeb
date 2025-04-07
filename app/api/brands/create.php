@@ -11,13 +11,10 @@ try {
     $database = Database::getInstance();
     $db = $database->getConnection();
     $thuongHieu = new ThuongHieu($db);
-
-    // Validate required fields
     if (empty($_POST['ma_thuong_hieu']) || empty($_POST['ten_thuong_hieu'])) {
         throw new Exception('Vui lòng điền đầy đủ thông tin bắt buộc');
     }
 
-    // Handle logo upload
     $fileName = null;
     if (isset($_FILES['logo']) && $_FILES['logo']['error'] === 0) {
         $uploadDir = __DIR__ . '/../../../public/uploads/brands/';

@@ -50,6 +50,7 @@ class UserController extends BaseController {
         }
     }
     public function login() {
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = $_POST['email'] ?? '';
             $password = $_POST['password'] ?? '';
@@ -66,10 +67,8 @@ class UserController extends BaseController {
                     $_SESSION['ho_ten'] = $user['ho_ten'];
                     $_SESSION['role'] = $user['role'];
                     
-                    // Set success message for SweetAlert
                     $_SESSION['login_success'] = true;
                     
-                    // Redirect based on role
                     if ($user['role'] === 'admin') {
                         header('Location: /WebbandoTT/admin/dashboard');
                     } else {
@@ -87,6 +86,7 @@ class UserController extends BaseController {
                 exit;
             }
         }
+
         require __DIR__ . '/../views/login.php';
     }
 

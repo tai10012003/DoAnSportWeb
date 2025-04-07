@@ -139,3 +139,21 @@ $currentPage = $data['currentPage'];
     <script src="/WebbandoTT/app/public/js/admin/blogs.js"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

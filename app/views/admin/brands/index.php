@@ -103,6 +103,9 @@ $brands = $data['brands'];
                                                title="Sửa">
                                                 <i class='bx bx-edit-alt'></i>
                                             </a>
+
+
+                                            
                                             <button class="btn-action delete delete-brand" 
                                                     data-id="<?= $brand['id'] ?>" 
                                                     title="Xóa">
@@ -137,10 +140,6 @@ $brands = $data['brands'];
         </div>
     </div>
 
-
-
-
-    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/WebbandoTT/app/public/js/admin/brands.js"></script>

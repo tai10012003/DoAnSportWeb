@@ -114,14 +114,3 @@
     <script src="/WebbandoTT/public/js/main.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-

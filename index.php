@@ -135,7 +135,6 @@ switch ($route) {
             if (!isset($_SESSION['cart'])) {
                 $_SESSION['cart'] = [];
             }
-            // Xử lý thêm vào giỏ hàng
             echo json_encode(['success' => true]);
         }
         break;
@@ -145,17 +144,18 @@ switch ($route) {
         require_once __DIR__ . '/app/controllers/ReviewController.php';
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
             try {
                 $reviewController = new ReviewController();
                 echo $reviewController->addReview();
             } catch (Exception $e) {
                 echo json_encode(['success' => false, 'message' => 'Lỗi hệ thống']);
             }
+
             exit;
         }
         break;
 
-    // User routes
     case '/user/login':
         $userController = new UserController();
         $userController->login();

@@ -307,7 +307,7 @@ $stmt->execute([$ma_sp]);
                                                     <i class="bi bi-star<?= $i <= $review['diem_danh_gia'] ? '-fill text-warning' : '' ?>"></i>
                                                 <?php endfor; ?>
                                             </div>
-                                            
+
                                         </div>
                                         <div class="review-content">
                                             <?= nl2br(htmlspecialchars($review['noi_dung'])) ?>
@@ -434,9 +434,11 @@ $stmt->execute([$ma_sp]);
     
     document.getElementById('reviewForm')?.addEventListener('submit', function(e) {
         e.preventDefault();
+
         const submitBtn = this.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
         const formData = new FormData(this);
+        
         fetch('/WebbandoTT/api/reviews/add', {
             method: 'POST',
             body: formData
@@ -472,9 +474,9 @@ $stmt->execute([$ma_sp]);
     });
 
     document.getElementById('addToCartForm').addEventListener('submit', async function(e) {
-        e.preventDefault(); // Ngăn chặn hành vi mặc định của form
+        e.preventDefault();
 
-        const formData = new FormData(this); // Lấy dữ liệu từ form
+        const formData = new FormData(this);
 
         try {
             const response = await fetch('/WebbandoTT/app/api/carts/add_to_cart.php', {
@@ -485,10 +487,10 @@ $stmt->execute([$ma_sp]);
 
             if (result.success) {
 
-                alert(result.message); // Hiển thị thông báo thành công
-                updateCartCount(result.cart_count); // Cập nhật số lượng giỏ hàng
+                alert(result.message);
+                updateCartCount(result.cart_count);
             } else {
-                alert(result.message); // Hiển thị thông báo lỗi
+                alert(result.message);
             }
         } catch (error) {
             console.error('Error:', error);

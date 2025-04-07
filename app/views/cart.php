@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giỏ hàng - Sport Elite</title>
-    
 
 
 
-    
+
+
     <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link href="/WebbandoTT/app/public/css/style.css" rel="stylesheet">
 </head>
+
 <body>
     <?php include __DIR__ . '/../../includes/header.php'; ?>
 
@@ -36,8 +38,8 @@
                                 <div class="cart-item mb-4 border-bottom pb-4">
                                     <div class="row align-items-center">
                                         <div class="col-md-2">
-                                            <img src="/WebbandoTT/public/images/products/<?php echo htmlspecialchars($item['image']); ?>" 
-                                                 class="img-fluid rounded" alt="<?php echo htmlspecialchars($item['name']); ?>">
+                                            <img src="/WebbandoTT/public/images/products/<?php echo htmlspecialchars($item['image']); ?>"
+                                                class="img-fluid rounded" alt="<?php echo htmlspecialchars($item['name']); ?>">
                                         </div>
                                         <div class="col-md-4">
                                             <h5 class="mb-2"><?php echo htmlspecialchars($item['name']); ?></h5>
@@ -46,9 +48,9 @@
                                         <div class="col-md-3">
                                             <div class="quantity-control d-flex align-items-center">
                                                 <button class="btn btn-outline-secondary btn-sm" data-action="decrease">-</button>
-                                                <input type="number" class="form-control form-control-sm mx-2 text-center quantity-input" 
-                                                       value="<?php echo $item['quantity']; ?>" min="1" max="10" 
-                                                       data-product-id="<?php echo $product_id; ?>" style="width: 60px">
+                                                <input type="number" class="form-control form-control-sm mx-2 text-center quantity-input"
+                                                    value="<?php echo $item['quantity']; ?>" min="1" max="10"
+                                                    data-product-id="<?php echo $product_id; ?>" style="width: 60px">
                                                 <button class="btn btn-outline-secondary btn-sm" data-action="increase">+</button>
                                             </div>
                                         </div>
@@ -69,6 +71,9 @@
                     </div>
                 </div>
             </div>
+
+
+
 
             <?php if (!empty($_SESSION['cart'])): ?>
                 <div class="col-lg-4">
@@ -130,4 +135,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/WebbandoTT/public/js/main.js"></script>
 </body>
+
 </html>

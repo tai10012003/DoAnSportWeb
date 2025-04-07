@@ -9,6 +9,7 @@ $posts = $data['posts'];
 $totalPages = $data['totalPages'];
 ?>
 
+
 <div class="blog-hero text-center text-white">
     <div class="container">
         <h3 class="display-5 fw-bold mb-3">TIN TỨC & BÀI VIẾT</h3>

@@ -240,8 +240,3 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-
-
-
-
-

@@ -50,7 +50,3 @@ try {
         'message' => $e->getMessage()
     ]);
 }
-
-
-
-

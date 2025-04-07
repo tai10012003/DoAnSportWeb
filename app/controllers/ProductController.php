@@ -11,7 +11,7 @@ class ProductController extends BaseController {
     public function __construct() {
         parent::__construct();
         $this->sanPhamModel = new SanPham($this->db);
-        $this->danhGiaModel = new DanhGia($this->db);  // Thêm khởi tạo
+        $this->danhGiaModel = new DanhGia($this->db);
     }
 
     public function index($page = 1) {
@@ -60,17 +60,14 @@ class ProductController extends BaseController {
             $products = $this->sanPhamModel->getAllProducts($page, $perPage);
             $totalProducts = $this->sanPhamModel->getTotalProducts();
             $totalPages = ceil($totalProducts / $perPage);
-            
             return [
                 'products' => $products,
                 'currentPage' => $page,
                 'totalPages' => $totalPages,
                 'perPage' => $perPage
             ]; 
-
         } catch (Exception $e) {
             error_log("Error in ProductController::getAllProducts: " . $e->getMessage());
-            
             return [
                 'products' => [],
                 'currentPage' => 1,
@@ -78,7 +75,6 @@ class ProductController extends BaseController {
                 'perPage' => $perPage
             ];
         }
-
     }
 
     public function getProductForEdit($id) {

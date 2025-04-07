@@ -3,7 +3,6 @@ class SanPham {
     private $conn;
     private $table_name = "san_pham";
 
-    // Thuộc tính đối tượng
     public $id;
     public $ma_sp;
     public $ten_sp;
@@ -129,7 +128,6 @@ class SanPham {
         
         $stmt = $this->conn->prepare($query);
         
-        // Sanitize input
         $this->ma_sp = htmlspecialchars(strip_tags($this->ma_sp));
         $this->ten_sp = htmlspecialchars(strip_tags($this->ten_sp));
         $this->mo_ta = htmlspecialchars(strip_tags($this->mo_ta));
@@ -149,7 +147,6 @@ class SanPham {
         $this->xuat_xu = htmlspecialchars(strip_tags($this->xuat_xu));
         $this->bao_hanh = htmlspecialchars(strip_tags($this->bao_hanh));
         
-        // Bind values
         $stmt->bindParam(":ma_sp", $this->ma_sp);
         $stmt->bindParam(":ten_sp", $this->ten_sp);
         $stmt->bindParam(":mo_ta", $this->mo_ta);

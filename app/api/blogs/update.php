@@ -84,12 +84,3 @@ try {
         'message' => $e->getMessage()
     ]);
 }
-
-
-
-
-
-
-
-
-

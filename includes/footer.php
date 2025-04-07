@@ -83,24 +83,18 @@
     </div>
 </footer>
 
-<!-- Back to top button -->
 <button id="back-to-top" class="btn btn-primary back-to-top">
     <i class="bi bi-arrow-up"></i>
 </button>
 
-<!-- Essential Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/WebbandoTT/app/public/js/main.js"></script>
 
-<!-- Custom Scripts -->
 <script>
-    // Remove loader when page is loaded
     window.addEventListener('load', function() {
         document.querySelector('.page-loader').style.display = 'none';
     });
-
-    // Navbar scroll effect
     window.addEventListener('scroll', function() {
         if (window.scrollY > 50) {
             document.querySelector('.navbar').classList.add('scrolled');

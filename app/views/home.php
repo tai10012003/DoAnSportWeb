@@ -11,8 +11,6 @@ $featuredProducts = $homeController->index();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sport Elite - Thiết Bị Thể Thao Cao Cấp</title>
-    
-    <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link href="/WebbandoTT/app/public/css/style.css" rel="stylesheet">
@@ -40,8 +38,6 @@ $featuredProducts = $homeController->index();
     include __DIR__ . '/../../includes/header.php'; 
     ?>
 
-    <!-- Main Content -->
-    <!-- Hero Carousel -->
     <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
@@ -79,8 +75,6 @@ $featuredProducts = $homeController->index();
             <span class="carousel-control-next-icon"></span>
         </button>
     </div>
-
-    <!-- Categories Section -->
     <section class="categories bg-light" style="padding: 100px 0 50px 0;">
         <div class="container">
             <h2 class="section-title">DANH MỤC SẢN PHẨM</h2>
@@ -110,7 +104,9 @@ $featuredProducts = $homeController->index();
         </div>
     </section>
 
-    <!-- Brands Section -->
+
+
+
     <section class="brands py-5">
         <div class="container">
             <h2 class="section-title">THƯƠNG HIỆU NỔI TIẾNG</h2>
@@ -130,6 +126,10 @@ $featuredProducts = $homeController->index();
             </div>
         </div>
     </section>
+
+
+
+
 
     <section class="featured-products bg-light">
         <div class="container">
@@ -205,6 +205,9 @@ $featuredProducts = $homeController->index();
         </div>
     </section>
 
+
+
+
     <section class="stats-counter">
         <div class="container">
             <div class="row g-4">
@@ -235,8 +238,6 @@ $featuredProducts = $homeController->index();
             </div>
         </div>
     </section>
-
-    <!-- Features Section -->
     <section class="features bg-light">
         <div class="container">
             <div class="row g-4 text-center">
@@ -260,7 +261,6 @@ $featuredProducts = $homeController->index();
         <hr>
     </section>
 
-    <!-- Why Choose Us Section -->
     <section class="why-choose-us bg-light">
         <div class="container">
             <h3 class="section-title">TẠI SAO CHỌN SPORT ELITE ?</h3>
@@ -299,7 +299,6 @@ $featuredProducts = $homeController->index();
     <?php require_once __DIR__ . '/../views/components/chatbot.php'; ?>
     <?php include __DIR__ . '/../../includes/footer.php'; ?>
 
-    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/WebbandoTT/app/public/js/main.js"></script>
     <script src="/WebbandoTT/app/public/js/chatbot.js"></script>

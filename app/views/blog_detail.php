@@ -1,6 +1,8 @@
 <?php include 'includes/header.php';
 $post = $data['post'];
 $relatedPosts = $data['relatedPosts'];
+
+
 ?>
 
 <article class="article-detail">

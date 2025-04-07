@@ -116,14 +116,11 @@ $filters = $data['filters'];
 
         <!-- Danh sách sản phẩm -->
         <div class="col-lg-9">
-
             <div class="product-controls mb-4">
-                
                 <div class="row align-items-center">
                     <div class="col">
                         <span>Hiển thị <?php echo count($products); ?> trong <?php echo $totalProducts; ?> sản phẩm</span>
                     </div>
-
                     <div class="col-auto">
                         <a href="/WebbandoTT/san-pham" 
                             class="btn btn-outline-dark btn-sm" style="font-size: 16px;">
@@ -139,12 +136,11 @@ $filters = $data['filters'];
                             <option value="price_desc" <?php echo ($filters['sort'] ?? '') === 'price_desc' ? 'selected' : ''; ?>>Giá giảm dần</option>
                         </select>
                     </div>
-
                 </div>
+                
             </div>
 
             <div class="row g-4">
-
                 <?php
                 if (!empty($products)) {
                     foreach ($products as $product) {
@@ -156,6 +152,7 @@ $filters = $data['filters'];
                         $imagePath = $product['hinh_anh'] 
                             ? "/WebbandoTT/public/uploads/products/" . $product['hinh_anh']
                             : "/WebbandoTT/app/public/images/products/no-image.jpg";
+                        
                         echo '<div class="col-md-4">
                                 <div class="product-card">
                                     <div class="product-badge">-20%</div>
@@ -177,7 +174,6 @@ $filters = $data['filters'];
                                             </a>
                                         </div>
                                     </div>
-
                                     <div class="product-info">
                                         <a href="/WebbandoTT/san-pham/' . htmlspecialchars($masp) . '" class="text-decoration-none">
                                             <h3 class="product-title">' . htmlspecialchars($ten_sp) . '</h3>
@@ -201,7 +197,6 @@ $filters = $data['filters'];
                                             <span class="rating-count">(' . number_format($avgRating, 1) . ' - ' . ($product['total_reviews'] ?? 0) . ' đánh giá)</span>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>';
                     }

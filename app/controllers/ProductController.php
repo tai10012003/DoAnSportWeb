@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/BaseController.php';
 require_once __DIR__ . '/../models/SanPham.php';
-require_once __DIR__ . '/../models/DanhGia.php';  // Thêm dòng này
+require_once __DIR__ . '/../models/DanhGia.php'; 
 require_once __DIR__ . '/../config/database.php';
 
 class ProductController extends BaseController {
@@ -55,6 +55,7 @@ class ProductController extends BaseController {
     }
 
     public function getAllProducts($page = 1, $perPage = 12) {
+
         try {
             $products = $this->sanPhamModel->getAllProducts($page, $perPage);
             $totalProducts = $this->sanPhamModel->getTotalProducts();
@@ -65,9 +66,11 @@ class ProductController extends BaseController {
                 'currentPage' => $page,
                 'totalPages' => $totalPages,
                 'perPage' => $perPage
-            ];
+            ]; 
+
         } catch (Exception $e) {
             error_log("Error in ProductController::getAllProducts: " . $e->getMessage());
+            
             return [
                 'products' => [],
                 'currentPage' => 1,
@@ -75,6 +78,7 @@ class ProductController extends BaseController {
                 'perPage' => $perPage
             ];
         }
+
     }
 
     public function getProductForEdit($id) {

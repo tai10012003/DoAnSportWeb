@@ -124,4 +124,6 @@ $relatedPosts = $data['relatedPosts'];
 
 
 
+
+
 <?php include 'includes/footer.php'; ?>

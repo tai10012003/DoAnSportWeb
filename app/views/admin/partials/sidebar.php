@@ -6,7 +6,7 @@
         </h4>
     </div>
 
-    
+
     <div class="sidebar-menu">
         <div class="sidebar-section">
             <div class="section-title">Quản lý chung</div>
@@ -24,6 +24,7 @@
             </div>
         </div>
 
+        
         <div class="sidebar-section">
             <div class="section-title">Quản lý sản phẩm</div>
             <div class="nav-item">

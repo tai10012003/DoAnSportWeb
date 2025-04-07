@@ -15,19 +15,15 @@ try {
     $database = Database::getInstance();
     $db = $database->getConnection();
     $danhMuc = new DanhMuc($db);
-
-    // Get existing category to check if it exists and get image path
     $existingCategory = $danhMuc->getCategory($_GET['id']);
     if (!$existingCategory) {
         throw new Exception('Không tìm thấy danh mục');
     }
 
-    // Set ID for deletion
     $danhMuc->id = $_GET['id'];
 
-    // Delete the category
+
     if ($danhMuc->delete()) {
-        // If deletion successful, delete the image file if exists
         if (!empty($existingCategory['hinh_anh'])) {
             $imagePath = __DIR__ . '/../../../public/uploads/categories/' . $existingCategory['hinh_anh'];
             if (file_exists($imagePath)) {
@@ -50,3 +46,6 @@ try {
         'message' => $e->getMessage()
     ]);
 }
+
+
+

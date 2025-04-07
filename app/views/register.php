@@ -161,7 +161,7 @@
             return isValid;
         }
 
-        //hien thi loi
+        //hien thi loi cho người dùng
         function showError(inputId, message) {
             const input = document.getElementById(inputId);
             const errorDiv = document.createElement('div');

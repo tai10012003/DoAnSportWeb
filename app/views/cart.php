@@ -74,7 +74,10 @@
 
 
 
+  
 
+
+            
             <?php if (!empty($_SESSION['cart'])): ?>
                 <div class="col-lg-4">
                     <div class="card shadow-sm border-0">

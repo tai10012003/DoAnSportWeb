@@ -60,6 +60,7 @@ $filters = $data['filters'];
                     </div>
                 </div>
 
+                
                 <!-- Thương hiệu -->
                 <div class="filter-box mb-4">
                     <h5 class="filter-title border-bottom pb-2 mb-3 mt-4">Thương Hiệu</h5>
@@ -120,10 +121,9 @@ $filters = $data['filters'];
                         </a>
                     </div>
                 </div>
+
             </div>
         </div>
-
-        <!-- Danh sách sản phẩm -->
         <div class="col-lg-9">
             <div class="product-controls mb-4">
                 <div class="row align-items-center">
@@ -207,7 +207,12 @@ $filters = $data['filters'];
                                         </div>
                                     </div>
                                 </div>
-                            </div>';
+                            </div>'; 
+
+
+
+
+
                     }
                 } else {
                     echo '<div class="col-12"><p class="text-center">Không tìm thấy sản phẩm nào</p></div>';
@@ -241,7 +246,6 @@ $filters = $data['filters'];
 <script src="/WebbandoTT/app/public/js/main.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Xử lý form tìm kiếm
         const filterForm = document.getElementById('filterForm');
         filterForm.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -250,6 +254,8 @@ $filters = $data['filters'];
                 window.location.href = '/WebbandoTT/san-pham?search=' + encodeURIComponent(searchValue);
             }
         });
+
+        // Xử lý sắp xếp
         const sortSelect = document.getElementById('sortSelect');
         sortSelect.addEventListener('change', function() {
             const currentUrl = new URL(window.location.href);

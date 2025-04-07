@@ -117,7 +117,8 @@ switch ($route) {
         session_destroy();
         header('Location: /WebbandoTT/dang-nhap');
         exit;
-        
+
+    // API Routes
     case '/api/san-pham/search':
         header('Content-Type: application/json');
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {

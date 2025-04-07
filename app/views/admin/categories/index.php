@@ -5,9 +5,9 @@ checkAdminAuth();
 
 $route = $_SERVER['REQUEST_URI'];
 $route = str_replace('/WebbandoTT', '', $route);
-
 $categoryController = new CategoryController();
 $data = $categoryController->index();
+
 
 $categories = $data['categories'];
 ?>
@@ -88,7 +88,6 @@ $categories = $data['categories'];
                                             </div>
                                         </div>
                                     </td>
-                                    
                                     <td> <?= htmlspecialchars($category['mo_ta'] ?? 'Chưa có mô tả') ?></td>
                                     <td><?= htmlspecialchars($category['danh_muc_cha_id'] ?? 'Chưa có danh mục cha') ?></td>
                                     <td><?= $category['thu_tu'] ?></td>
@@ -124,6 +123,7 @@ $categories = $data['categories'];
                 </table>
             </div>
 
+            <!-- Pagination -->
             <?php if (isset($totalPages) && $totalPages > 1): ?>
             <nav class="mt-3">
                 <ul class="pagination justify-content-end mb-0">
@@ -143,9 +143,3 @@ $categories = $data['categories'];
     <script src="/WebbandoTT/app/public/js/admin/categories.js"></script>
 </body>
 </html>
-
-
-
-
-
-

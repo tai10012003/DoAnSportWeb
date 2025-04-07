@@ -39,7 +39,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    // Delete Category
+
+
+
+
     const deleteCategoryButtons = document.querySelectorAll('.delete-category');
     deleteCategoryButtons.forEach(button => {
         button.addEventListener('click', handleDeleteCategory);
@@ -93,4 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+
+
+    
 });

@@ -101,8 +101,6 @@ $currentPage = $data['currentPage'];
                                                 <i class='bx bx-edit-alt'></i>
                                             </a>
 
-
-                                            
                                             <button class="btn-action delete delete-post" 
                                                     data-id="<?= $post['id'] ?>" 
                                                     title="Xóa">

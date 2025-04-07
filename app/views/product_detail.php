@@ -29,9 +29,10 @@ $avgRating = $reviewController->danhGiaModel->getAverageRating($product['id']);
 $averageRating = round($avgRating['avg_rating'] ?? 0, 1);
 $totalReviews = $avgRating['total_reviews'] ?? 0;
 
-// Update views
 $update_sql = "UPDATE san_pham SET luot_xem = luot_xem + 1 WHERE ma_sp = ?";
+
 $stmt = $conn->prepare($update_sql);
+
 $stmt->execute([$ma_sp]);
 
 ?>
@@ -47,7 +48,6 @@ $stmt->execute([$ma_sp]);
         </nav>
 
         <div class="row">
-            <!-- Gallery Section -->
             <div class="col-lg-5">
                 <div class="detail-gallery">
                     <div class="detail-main-image">
@@ -55,6 +55,7 @@ $stmt->execute([$ma_sp]);
                              alt="<?= htmlspecialchars($product['ten_sp']) ?>" 
                              id="main-product-image">
                     </div>
+
                     <div class="detail-thumbnails">
                         <?php
                         $images = [$product['hinh_anh']];
@@ -66,10 +67,11 @@ $stmt->execute([$ma_sp]);
                              onclick="changeMainImage(this.src)">
                         <?php endforeach; ?>
                     </div>
+
                 </div>
             </div>
 
-            <!-- Product Info Section -->
+
             <div class="col-lg-7">
                 <div class="detail-info-wrapper">
                     <h1 class="detail-product-title"><?= htmlspecialchars($product['ten_sp']) ?></h1>
@@ -79,18 +81,22 @@ $stmt->execute([$ma_sp]);
                             <span class="detail-meta-label">Mã sản phẩm:</span>
                             <span><?= htmlspecialchars($product['ma_sp']) ?></span>
                         </div>
+
                         <div class="detail-meta-item">
                             <span class="detail-meta-label">Danh mục:</span>
                             <span><?= htmlspecialchars($product['ten_danh_muc']) ?></span>
                         </div>
+
                         <div class="detail-meta-item">
                             <span class="detail-meta-label">Thương hiệu:</span>
                             <span><?= htmlspecialchars($product['ten_thuong_hieu']) ?></span>
                         </div>
+
                         <div class="detail-meta-item">
                             <span class="detail-meta-label">Lượt xem:</span>
                             <span><?= number_format($product['luot_xem']) ?></span>
                         </div>
+
                         <div class="detail-meta-item">
                             <span class="detail-meta-label">Đánh giá:</span>
                             <span class="d-flex align-items-center">
@@ -102,6 +108,7 @@ $stmt->execute([$ma_sp]);
                                 <span>(<?= $averageRating ?>/5 - <?= $totalReviews ?> đánh giá)</span>
                             </span>
                         </div>
+
                     </div>
 
                     <div class="detail-price-wrapper">
@@ -131,6 +138,7 @@ $stmt->execute([$ma_sp]);
                         </div>
 
                         <div class="product-variations mt-4 mb-4">
+
                             <?php if (!empty($product['mau_sac'])): ?>
                             <div class="variation-group mb-4">
                                 <label class="form-label">Màu sắc:</label>
@@ -183,6 +191,7 @@ $stmt->execute([$ma_sp]);
                             </button>
                         </div>
                     </form>
+
                     <?php else: ?>
                     <div class="alert alert-warning mt-3" role="alert">
                         <i class="bi bi-exclamation-triangle-fill me-2"></i>
@@ -212,7 +221,6 @@ $stmt->execute([$ma_sp]);
             </div>
         </div>
 
-        <!-- Product Tabs -->
         <div class="detail-tabs">
             <ul class="nav nav-tabs detail-tab-nav" role="tablist">
                 <li class="nav-item">
@@ -280,6 +288,7 @@ $stmt->execute([$ma_sp]);
                                     </div>
                                     <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
                                 </form>
+                                
                             <?php else: ?>
                                 <div class="alert alert-info">
                                     Vui lòng <a href="/WebbandoTT/dang-nhap">đăng nhập</a> để viết đánh giá

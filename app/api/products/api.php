@@ -72,16 +72,3 @@ try {
         'message' => $e->getMessage()
     ]);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

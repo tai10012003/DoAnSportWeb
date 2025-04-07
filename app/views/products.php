@@ -22,14 +22,12 @@ $filters = $data['filters'];
         <h1 class="display-6 text-center mb-4">SẢN PHẨM THỂ THAO</h1>
         <div class="search-box mb-5">
             <form action="/WebbandoTT/san-pham" method="GET" id="filterForm">
-
                 <div class="input-group">
                     <input type="text" class="form-control" name="search" 
                            placeholder="Tìm kiếm sản phẩm..." 
                            value="<?php echo htmlspecialchars($filters['search'] ?? ''); ?>">
                     <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
                 </div>
-                
             </form>
         </div>
     </div>
@@ -62,6 +60,7 @@ $filters = $data['filters'];
                     </div>
                 </div>
 
+
                 <div class="filter-box mb-4">
                     <h5 class="filter-title border-bottom pb-2 mb-3 mt-4">Thương Hiệu</h5>
                     <div class="list-group list-group-flush">
@@ -83,6 +82,8 @@ $filters = $data['filters'];
 
                     </div>
                 </div>
+
+                <!-- Khoảng giá -->
                 <div class="filter-box mb-4">
 
                     <h5 class="filter-title border-bottom pb-2 mb-3 mt-4">Khoảng Giá</h5>

@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/BaseController.php';
 require_once __DIR__ . '/../models/SanPham.php';
-require_once __DIR__ . '/../models/DanhGia.php'; 
+require_once __DIR__ . '/../models/DanhGia.php';  // Thêm dòng này
 require_once __DIR__ . '/../config/database.php';
 
 class ProductController extends BaseController {
@@ -11,7 +11,7 @@ class ProductController extends BaseController {
     public function __construct() {
         parent::__construct();
         $this->sanPhamModel = new SanPham($this->db);
-        $this->danhGiaModel = new DanhGia($this->db);
+        $this->danhGiaModel = new DanhGia($this->db);  // Thêm khởi tạo
     }
 
     public function index($page = 1) {
@@ -55,17 +55,17 @@ class ProductController extends BaseController {
     }
 
     public function getAllProducts($page = 1, $perPage = 12) {
-
         try {
             $products = $this->sanPhamModel->getAllProducts($page, $perPage);
             $totalProducts = $this->sanPhamModel->getTotalProducts();
             $totalPages = ceil($totalProducts / $perPage);
+            
             return [
                 'products' => $products,
                 'currentPage' => $page,
                 'totalPages' => $totalPages,
                 'perPage' => $perPage
-            ]; 
+            ];
         } catch (Exception $e) {
             error_log("Error in ProductController::getAllProducts: " . $e->getMessage());
             return [
@@ -88,7 +88,6 @@ class ProductController extends BaseController {
                 'categories' => $categories,
                 'brands' => $brands
             ];
-
         } catch (Exception $e) {
             error_log("Error in ProductController::getProductForEdit: " . $e->getMessage());
             return [
@@ -103,6 +102,8 @@ class ProductController extends BaseController {
         try {
             $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
             $perPage = 12;
+            
+            // Lấy và validate các tham số filter
             $search = isset($_GET['search']) ? trim($_GET['search']) : '';
             $categoryId = isset($_GET['category']) && !empty($_GET['category']) ? (int)$_GET['category'] : null;
             $brandId = isset($_GET['brand']) && !empty($_GET['brand']) ? (int)$_GET['brand'] : null;
@@ -120,12 +121,12 @@ class ProductController extends BaseController {
             );
 
             // Thêm đoạn code này để lấy đánh giá cho mỗi sản phẩm
-
             foreach ($products as &$product) {
                 $avgRating = $this->danhGiaModel->getAverageRating($product['id']);
                 $product['avg_rating'] = round($avgRating['avg_rating'] ?? 0, 1);
                 $product['total_reviews'] = $avgRating['total_reviews'] ?? 0;
             }
+
             $categories = $this->sanPhamModel->getAllCategories();
             $brands = $this->sanPhamModel->getAllBrands();
 
@@ -144,7 +145,6 @@ class ProductController extends BaseController {
                     'sort' => $sort
                 ]
             ];
-
         } catch (Exception $e) {
             error_log("Error in filterAndGetProducts: " . $e->getMessage());
             return [
@@ -156,7 +156,6 @@ class ProductController extends BaseController {
                 'totalProducts' => 0,
                 'filters' => []
             ];
-        
         }
     }
 }

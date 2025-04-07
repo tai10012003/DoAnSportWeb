@@ -825,6 +825,7 @@
       margin-bottom: 0.5rem;
   }
   
+  /* New Homepage Sections */
   .why-choose-us {
       padding: 10px 0 60px 0;
       background: var(--light-color);
@@ -839,8 +840,7 @@
   
 
 
-
-
+  
   .stats-counter::before {
       content: '';
       position: absolute;
@@ -873,7 +873,12 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
   }
-  
+
+
+
+
+
+
   .counter-label {
       color: white;
       font-size: 1.1rem;
@@ -931,6 +936,9 @@
       font-weight: 600;
       margin-bottom: 1rem;
   }
+  
+
+
   
   .product-badge {
       position: absolute;

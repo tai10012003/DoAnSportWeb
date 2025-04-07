@@ -332,6 +332,7 @@ $stmt->execute([$ma_sp]);
 
         <div class="related-products">
             <h3 class="section-title">SẢN PHẨM LIÊN QUAN</h3>
+            
             <div class="row g-4">
                 <?php
                 $sql = "SELECT sp.*, dm.ten_danh_muc, th.ten_thuong_hieu,
@@ -355,6 +356,7 @@ $stmt->execute([$ma_sp]);
                         ? "/WebbandoTT/public/uploads/products/" . $related['hinh_anh']
                         : "/WebbandoTT/app/public/images/no-image.jpg";
                 ?>
+
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="product-card">
                             <?php if($related['gia_khuyen_mai'] > 0): ?>
@@ -362,12 +364,14 @@ $stmt->execute([$ma_sp]);
                                     -<?= round($related['phan_tram_giam']) ?>%
                                 </div>
                             <?php endif; ?>
+
                             <div class="product-image">
                                 <a href="/WebbandoTT/san-pham/<?= htmlspecialchars($related['ma_sp']) ?>" class="product-link">
                                     <img src="<?= htmlspecialchars($imagePath) ?>" 
                                          alt="<?= htmlspecialchars($related['ten_sp']) ?>"
                                          class="img-fluid">
                                 </a>
+
                                 <div class="product-actions">
                                     <button class="btn btn-light btn-sm add-to-cart" 
                                             data-product-id="<?= $related['id'] ?>"
@@ -384,15 +388,18 @@ $stmt->execute([$ma_sp]);
                                     </a>
                                 </div>
                             </div>
+
                             <div class="product-info">
                                 <a href="/WebbandoTT/san-pham/<?= htmlspecialchars($related['ma_sp']) ?>" 
                                    class="text-decoration-none">
                                     <h3 class="product-title"><?= htmlspecialchars($related['ten_sp']) ?></h3>
                                 </a>
+
                                 <div class="product-category">
                                     <?= htmlspecialchars($related['ten_danh_muc']) ?> | 
                                     <?= htmlspecialchars($related['ten_thuong_hieu']) ?>
                                 </div>
+
                                 <div class="product-price">
                                     <?php if($related['gia_khuyen_mai'] > 0): ?>
                                         <span class="price-new"><?= number_format($related['gia_khuyen_mai']) ?>₫</span>
@@ -401,6 +408,7 @@ $stmt->execute([$ma_sp]);
                                         <span class="price-new"><?= number_format($related['gia']) ?>₫</span>
                                     <?php endif; ?>
                                 </div>
+
                                 <div class="product-rating"> 
                                     <?php for($i = 1; $i <= 5; $i++): ?>
                                             <?php if ($i <= floor($averageRating)): ?>

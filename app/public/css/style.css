@@ -838,9 +838,6 @@
       overflow: hidden;
   }
   
-
-
-  
   .stats-counter::before {
       content: '';
       position: absolute;
@@ -873,11 +870,6 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
   }
-
-
-
-
-
 
   .counter-label {
       color: white;

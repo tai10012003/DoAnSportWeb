@@ -9,6 +9,7 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+
 $db = new Database();
 $conn = $db->getConnection();
 
@@ -22,6 +23,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,6 +32,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link href="/WebbandoTT/app/public/css/style.css" rel="stylesheet">
 </head>
+
 <body>
     <?php include __DIR__ . '/../../includes/header.php'; ?>
 
@@ -50,8 +53,8 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                             <label class="form-label" for="ho_ten">Họ và tên</label>
                                             <div class="input-group">
                                                 <span class="input-group-text"><i class="bi bi-person"></i></span>
-                                                <input type="text" class="form-control" id="ho_ten" name="ho_ten" 
-                                                       value="<?php echo htmlspecialchars($user['ho_ten']); ?>" required>
+                                                <input type="text" class="form-control" id="ho_ten" name="ho_ten"
+                                                    value="<?php echo htmlspecialchars($user['ho_ten']); ?>" required>
                                             </div>
                                         </div>
                                     </div>
@@ -60,8 +63,8 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                             <label class="form-label" for="email">Email</label>
                                             <div class="input-group">
                                                 <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                                                <input type="email" class="form-control" id="email" name="email" 
-                                                       value="<?php echo htmlspecialchars($user['email']); ?>" required>
+                                                <input type="email" class="form-control" id="email" name="email"
+                                                    value="<?php echo htmlspecialchars($user['email']); ?>" required>
                                             </div>
                                         </div>
                                     </div>
@@ -70,8 +73,8 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                             <label class="form-label" for="so_dien_thoai">Số điện thoại</label>
                                             <div class="input-group">
                                                 <span class="input-group-text"><i class="bi bi-phone"></i></span>
-                                                <input type="tel" class="form-control" id="so_dien_thoai" name="so_dien_thoai" 
-                                                       value="<?php echo htmlspecialchars($user['so_dien_thoai']); ?>" required>
+                                                <input type="tel" class="form-control" id="so_dien_thoai" name="so_dien_thoai"
+                                                    value="<?php echo htmlspecialchars($user['so_dien_thoai']); ?>" required>
                                             </div>
                                         </div>
                                     </div>
@@ -80,8 +83,8 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                             <label class="form-label" for="dia_chi">Địa chỉ</label>
                                             <div class="input-group">
                                                 <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
-                                                <textarea class="form-control" id="dia_chi" name="dia_chi" rows="3" 
-                                                          required><?php echo htmlspecialchars($user['dia_chi']); ?></textarea>
+                                                <textarea class="form-control" id="dia_chi" name="dia_chi" rows="3"
+                                                    required><?php echo htmlspecialchars($user['dia_chi']); ?></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -106,40 +109,41 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
     <script>
         document.getElementById('updateProfileForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             const formData = new FormData(this);
-            
+
             fetch('/WebbandoTT/app/api/users/update_profile.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Thành công!',
-                        text: 'Thông tin tài khoản đã được cập nhật',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                } else {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thành công!',
+                            text: 'Thông tin tài khoản đã được cập nhật',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi!',
+                            text: data.message || 'Có lỗi xảy ra khi cập nhật thông tin'
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
                     Swal.fire({
                         icon: 'error',
                         title: 'Lỗi!',
-                        text: data.message || 'Có lỗi xảy ra khi cập nhật thông tin'
+                        text: 'Có lỗi xảy ra khi cập nhật thông tin'
                     });
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Lỗi!',
-                    text: 'Có lỗi xảy ra khi cập nhật thông tin'
                 });
-            });
         });
     </script>
 </body>
+
 </html>

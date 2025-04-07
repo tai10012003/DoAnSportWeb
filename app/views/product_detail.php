@@ -301,13 +301,11 @@ $stmt->execute([$ma_sp]);
                                                 <span class="reviewer-name fw-bold"><?= htmlspecialchars($review['ten_nguoi_dung']) ?></span>
                                                 <small class="text-muted ms-2"><?= date('d/m/Y H:i', strtotime($review['created_at'])) ?></small>
                                             </div>
-
                                             <div class="star-rating">
                                                 <?php for($i = 1; $i <= 5; $i++): ?>
                                                     <i class="bi bi-star<?= $i <= $review['diem_danh_gia'] ? '-fill text-warning' : '' ?>"></i>
                                                 <?php endfor; ?>
                                             </div>
-
                                         </div>
                                         <div class="review-content">
                                             <?= nl2br(htmlspecialchars($review['noi_dung'])) ?>
@@ -431,14 +429,12 @@ $stmt->execute([$ma_sp]);
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/WebbandoTT/app/public/js/main.js"></script>
 <script>
-    
     document.getElementById('reviewForm')?.addEventListener('submit', function(e) {
         e.preventDefault();
-
         const submitBtn = this.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
+
         const formData = new FormData(this);
-        
         fetch('/WebbandoTT/api/reviews/add', {
             method: 'POST',
             body: formData
@@ -471,13 +467,12 @@ $stmt->execute([$ma_sp]);
         .finally(() => {
             submitBtn.disabled = false;
         });
+
     });
 
     document.getElementById('addToCartForm').addEventListener('submit', async function(e) {
         e.preventDefault();
-
         const formData = new FormData(this);
-
         try {
             const response = await fetch('/WebbandoTT/app/api/carts/add_to_cart.php', {
                 method: 'POST',
@@ -487,11 +482,12 @@ $stmt->execute([$ma_sp]);
 
             if (result.success) {
 
-                alert(result.message);
+                alert(result.message); 
                 updateCartCount(result.cart_count);
             } else {
                 alert(result.message);
             }
+
         } catch (error) {
             console.error('Error:', error);
             alert('Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng.');

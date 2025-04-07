@@ -76,7 +76,6 @@ class ProductController extends BaseController {
             ];
         }
     }
-
     public function getProductForEdit($id) {
         try {
             $product = $this->sanPhamModel->getProduct($id);
@@ -103,7 +102,6 @@ class ProductController extends BaseController {
             $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
             $perPage = 12;
             
-            // Lấy và validate các tham số filter
             $search = isset($_GET['search']) ? trim($_GET['search']) : '';
             $categoryId = isset($_GET['category']) && !empty($_GET['category']) ? (int)$_GET['category'] : null;
             $brandId = isset($_GET['brand']) && !empty($_GET['brand']) ? (int)$_GET['brand'] : null;
@@ -120,7 +118,6 @@ class ProductController extends BaseController {
                 $sort
             );
 
-            // Thêm đoạn code này để lấy đánh giá cho mỗi sản phẩm
             foreach ($products as &$product) {
                 $avgRating = $this->danhGiaModel->getAverageRating($product['id']);
                 $product['avg_rating'] = round($avgRating['avg_rating'] ?? 0, 1);

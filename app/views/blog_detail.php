@@ -122,4 +122,6 @@ $relatedPosts = $data['relatedPosts'];
     <?php endif; ?>
 </article>
 
+
+
 <?php include 'includes/footer.php'; ?>

@@ -114,15 +114,11 @@ $parentCategories = $categoryController->getAllParentCategories();
         </div>
     </div>
 
-
-
-
-
-    
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+
+
         function previewImage(input) {
             const preview = document.getElementById('imagePreview');
             preview.innerHTML = '';
@@ -171,6 +167,8 @@ $parentCategories = $categoryController->getAllParentCategories();
                 });
             }
         });
+
+        
     </script>
 </body>
 </html>

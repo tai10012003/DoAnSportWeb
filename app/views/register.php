@@ -161,6 +161,7 @@
             return isValid;
         }
 
+        //hien thi loi
         function showError(inputId, message) {
             const input = document.getElementById(inputId);
             const errorDiv = document.createElement('div');

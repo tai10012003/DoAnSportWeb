@@ -3,6 +3,8 @@ header('Content-Type: application/json');
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../models/DonHang.php';
 
+
+
 try {
     $database = Database::getInstance();
     $db = $database->getConnection();

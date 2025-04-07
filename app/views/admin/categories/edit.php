@@ -158,6 +158,8 @@ if (!$category) {
             }
         }
 
+
+        
         document.getElementById('updateCategoryForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -193,7 +195,3 @@ if (!$category) {
     </script>
 </body>
 </html>
-
-
-
-

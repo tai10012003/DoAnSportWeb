@@ -16,6 +16,8 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
 $db = new Database();
 $conn = $db->getConnection();
 
+
+
 // Lấy thông tin người dùng từ session
 $user_id = $_SESSION['user_id'];
 $query = "SELECT ho_ten, so_dien_thoai, dia_chi FROM users WHERE id = :user_id";

@@ -7,6 +7,8 @@ $relatedPosts = $data['relatedPosts'];
 
 
 
+
+
 <article class="article-detail">
     <div class="article-detail__banner">
         <div class="article-detail__image">

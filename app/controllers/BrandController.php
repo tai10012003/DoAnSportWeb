@@ -58,7 +58,3 @@ class BrandController extends BaseController {
         }
     }
 }
-
-
-
-

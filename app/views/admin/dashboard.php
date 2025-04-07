@@ -10,6 +10,7 @@ $pendingOrders = $data['pendingOrders'];
 $route = $_SERVER['REQUEST_URI'];
 $route = str_replace('/WebbandoTT', '', $route);
 ?>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>

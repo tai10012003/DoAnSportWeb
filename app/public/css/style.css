@@ -782,7 +782,7 @@
   }
   
   .product-image {
-      height: 250px;
+      height: 250px; /* Chiều cao cố định cho ảnh */
       overflow: hidden;
       position: relative;
   }
@@ -807,8 +807,6 @@
       -webkit-box-orient: vertical;
   }
   
-
-
   .product-desc {
       font-size: 0.9rem;
       color: #666;
@@ -827,8 +825,6 @@
       margin-bottom: 0.5rem;
   }
   
-
-
   .why-choose-us {
       padding: 10px 0 60px 0;
       background: var(--light-color);
@@ -916,8 +912,6 @@
       font-style: italic;
       margin-bottom: 1rem;
   }
-  
-
   
   .newsletter-section {
       padding: 4rem 0;

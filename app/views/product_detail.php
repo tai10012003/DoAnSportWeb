@@ -215,6 +215,7 @@ $stmt->execute([$ma_sp]);
             </div>
         </div>
 
+        <!-- Product Tabs -->
         <div class="detail-tabs">
             <ul class="nav nav-tabs detail-tab-nav" role="tablist">
                 <li class="nav-item">
@@ -300,11 +301,13 @@ $stmt->execute([$ma_sp]);
                                                 <span class="reviewer-name fw-bold"><?= htmlspecialchars($review['ten_nguoi_dung']) ?></span>
                                                 <small class="text-muted ms-2"><?= date('d/m/Y H:i', strtotime($review['created_at'])) ?></small>
                                             </div>
+
                                             <div class="star-rating">
                                                 <?php for($i = 1; $i <= 5; $i++): ?>
                                                     <i class="bi bi-star<?= $i <= $review['diem_danh_gia'] ? '-fill text-warning' : '' ?>"></i>
                                                 <?php endfor; ?>
                                             </div>
+                                            
                                         </div>
                                         <div class="review-content">
                                             <?= nl2br(htmlspecialchars($review['noi_dung'])) ?>
@@ -383,7 +386,6 @@ $stmt->execute([$ma_sp]);
                                     </a>
                                 </div>
                             </div>
-
                             <div class="product-info">
                                 <a href="/WebbandoTT/san-pham/<?= htmlspecialchars($related['ma_sp']) ?>" 
                                    class="text-decoration-none">
@@ -482,10 +484,11 @@ $stmt->execute([$ma_sp]);
             const result = await response.json();
 
             if (result.success) {
-                alert(result.message);
-                updateCartCount(result.cart_count);
+
+                alert(result.message); // Hiển thị thông báo thành công
+                updateCartCount(result.cart_count); // Cập nhật số lượng giỏ hàng
             } else {
-                alert(result.message);
+                alert(result.message); // Hiển thị thông báo lỗi
             }
         } catch (error) {
             console.error('Error:', error);
